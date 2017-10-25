@@ -1,10 +1,7 @@
 #coding=utf-8
 
 '''
-
 同步数据入库
-
-
 '''
 
 from apscheduler.schedulers.blocking import BlockingScheduler
@@ -14,6 +11,7 @@ from spider.StockWeekIncSpider import *
 from spider.StockMonthIncSpider import *
 from spider.PlateListIncForThsSpider import *
 from spider.PlateDayIncForThsSpider import *
+from spider.StockTimeIncSpider import *
 import time
 from utils.LogUtils import *
 from utils.SinaStockUtils import *
@@ -22,7 +20,7 @@ from dto.CacheData import *
 scheduler = BlockingScheduler()
 
 #股票日交易列表:每个交易日15：10更新交易数据
-@scheduler.scheduled_job('cron', id='stock_day_inc_spider', minute='45', day_of_week='0-4', hour='15')
+@scheduler.scheduled_job('cron', id='stock_day_inc_spider', minute='16', day_of_week='0-4', hour='22')
 def stock_day_inc_spider():
 
     try:
@@ -61,7 +59,6 @@ def stock_day_inc_spider():
 	LogUtils.info('===============================rel_plate_stock_inc_spider start=============================================')
 	start  = int(time.mktime(datetime.datetime.now().timetuple()))
 
-	plate_list_spider.get_plate_list()
 	plate_list_spider.get_all_plate_stocks(plate_list)
 
 	end  = int(time.mktime(datetime.datetime.now().timetuple()))
@@ -76,7 +73,7 @@ def stock_day_inc_spider():
 	LogUtils.info('===============================stock_day_inc_spider start=============================================')
 	start  = int(time.mktime(datetime.datetime.now().timetuple()))
 
-	stock_day_inc_spider = StockDayIncSpider(stock_analyzer=None, symbols = symbols, is_persist=True)
+	stock_day_inc_spider = StockDayIncSpider(stock_analyzer=None, symbols = symbols, inc_persist=True, hit_persist=True)
 	stock_day_inc_spider.get_allstocks_day()
 
 	end  = int(time.mktime(datetime.datetime.now().timetuple()))
@@ -124,7 +121,7 @@ def stock_day_inc_spider():
 	LogUtils.info('===============================stock_time_inc_spider_from_ths start=============================================')
 	start  = int(time.mktime(datetime.datetime.now().timetuple()))
 
-	stock_time_inc_spider = StockTimeIncSpider(stock_analyzer=None, symbols=symbols, is_persist=True)
+	stock_time_inc_spider = StockTimeIncSpider(stock_analyzer=None, symbols=symbols, inc_persist=True, hit_persit=False, identify=None)
 	stock_time_inc_spider.get_all_stocks_realtime_trades()
 
 	end  = int(time.mktime(datetime.datetime.now().timetuple()))

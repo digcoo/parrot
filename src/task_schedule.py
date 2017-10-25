@@ -96,7 +96,6 @@ def stock_day_inc_spider():
     LogUtils.info('===============================rel_plate_stock_inc_spider start=============================================')
     start  = int(time.mktime(datetime.datetime.now().timetuple()))
 
-    plate_list_spider.get_plate_list()
     plate_list_spider.get_all_plate_stocks(plate_list)
 
     end  = int(time.mktime(datetime.datetime.now().timetuple()))
@@ -111,7 +110,7 @@ def stock_day_inc_spider():
     LogUtils.info('===============================stock_day_inc_spider start=============================================')
     start  = int(time.mktime(datetime.datetime.now().timetuple()))
 
-    stock_day_inc_spider = StockDayIncSpider(stock_analyzer=None, symbols = symbols, is_persist=True)
+    stock_day_inc_spider = StockDayIncSpider(stock_analyzer=None, symbols = symbols, inc_persist=True, hit_persist=True)
     stock_day_inc_spider.get_allstocks_day()
 
     end  = int(time.mktime(datetime.datetime.now().timetuple()))

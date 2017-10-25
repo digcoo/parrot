@@ -1,16 +1,16 @@
 #encoding=utf-8
-
+import os
 import codecs
 import jsonpickle as json
 from utils.TimeUtils import *
 
 class LogUtils:
 
-    morn_hit_symbols_out_file_path = '/home/ubuntu/scripts/output'
+    morn_hit_symbols_out_file_path = os.getcwd() + '/output'
 
     @staticmethod
     def info(text):
-	print TimeUtils.get_current_timestring() + '  ' + text
+	print TimeUtils.get_current_timestring() + '\t' + text
 
 
 
