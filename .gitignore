@@ -7,5 +7,8 @@ test/results
 MANIFEST
 *.egg-info
 *.egg
+*.swo
+*.swp
+*.out
 dist
 build
