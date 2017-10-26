@@ -20,7 +20,7 @@ from dto.CacheData import *
 scheduler = BlockingScheduler()
 
 #股票日交易列表:每个交易日15：10更新交易数据
-@scheduler.scheduled_job('cron', id='stock_day_inc_spider', minute='16', day_of_week='0-4', hour='22')
+@scheduler.scheduled_job('cron', id='stock_day_inc_spider', minute='25', day_of_week='0-4', hour='16')
 def stock_day_inc_spider():
 
     try:
@@ -121,7 +121,7 @@ def stock_day_inc_spider():
 	LogUtils.info('===============================stock_time_inc_spider_from_ths start=============================================')
 	start  = int(time.mktime(datetime.datetime.now().timetuple()))
 
-	stock_time_inc_spider = StockTimeIncSpider(stock_analyzer=None, symbols=symbols, inc_persist=True, hit_persit=False, identify=None)
+	stock_time_inc_spider = StockTimeIncSpider(stock_analyzer=None, symbols=symbols, inc_persist=True, hit_persist=False, identify=None)
 	stock_time_inc_spider.get_all_stocks_realtime_trades()
 
 	end  = int(time.mktime(datetime.datetime.now().timetuple()))
