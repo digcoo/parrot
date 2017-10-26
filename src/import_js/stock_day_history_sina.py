@@ -72,11 +72,11 @@ class StockDayHistorySpider:
 		symbol_cnt += 1
 		print 'travel symbol = ' + symbol + ', has travel symbol_cnt = ' + str(symbol_cnt)
 #		if symbol == 'sz002658':
-#		if symbol_cnt > 2425:
-#		    flag = True
+		if symbol_cnt > 1300:
+		    flag = True
 
-#		if flag == False:
-#		    continue	
+		if flag == False:
+		    continue	
 
 		count = self.get_stock_days_history(symbol)
 		print 'collect symbol = ' + symbol + ', count = ' + str(count)

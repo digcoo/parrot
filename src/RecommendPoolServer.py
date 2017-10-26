@@ -1,9 +1,10 @@
 #encoding=utf-8
+import os
 from sys import path
-path.append('/home/ubuntu/scripts/utils')
-path.append('/home/ubuntu/scripts/vo')
-path.append('/home/ubuntu/scripts/quant')
-
+path.append(os.getcwd() + '/vo')
+path.append(os.getcwd() + '/utils')
+path.append(os.getcwd() + '/quant')
+path.append(os.getcwd() + '/dbs')
 from bottle import route, run, template, request, response
 import pymysql.cursors
 import bottle
@@ -17,8 +18,6 @@ from TimeUtils import *
 from BackTest import *
 from StockIncubator import *
 
-
-import gemfire
 import jsonpickle
 import traceback
 import json
@@ -45,17 +44,23 @@ class DateEncoder(json.JSONEncoder):
 def recommend():
     try:
         response.set_header("Access-Control-Allow-Origin", "*")
-	day_data = redis_client.query_latest_rec('day')
-	day_stocks = convert_json(day_data)
-	time_data = redis_client.query_latest_rec('time')
-	time_stocks = convert_json(time_data)
-	final_stocks = []
-	final_stocks.extend(day_stocks)
-	final_stocks.extend(time_stocks)
-	ret_data = json.dumps(final_stocks)
-	return ret_data
+	keys = redis_client.keys()
+	stock_hits = []
+	for key in keys:
+	    stock_hits.extend(redis_client.get(key))
+	return jsonpickle.encode(convert_json(stock_hits))
+
+#	day_data = redis_client.query_latest_rec('day')
+#	day_stocks = convert_json(day_data)
+#	time_data = redis_client.query_latest_rec('time')
+#	time_stocks = convert_json(time_data)
+#	final_stocks = []
+#	final_stocks.extend(day_stocks)
+#	final_stocks.extend(time_stocks)
+#	ret_data = json.dumps(final_stocks)
+#	return ret_data
     except Exception, e:
-        print e
+        traceback.print_exc()
 
 
 @route('/digcoo/hit/add', method='POST')

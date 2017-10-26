@@ -23,6 +23,9 @@ class RedisClient:
     def keys(self):
 	return self.client.keys()
 
+    def get(self, key):
+	return eval(self.client.get(key))
+
     def put_all_today(self, stocks):
 	key = TimeUtils.get_current_datestamp()
 	self.client.set(str(key), stocks)
@@ -37,10 +40,12 @@ class RedisClient:
 	
 	if type == 'day':
 	    local_rec_stocks_map[self.key_day] = stocks
+	    self.client.set(str(key), local_rec_stocks_map)
 	elif type == 'time':
 	    local_rec_stocks_map[self.key_time] = stocks
-
-	self.client.set(str(key), local_rec_stocks_map)
+	    self.client.set(str(key), local_rec_stocks_map)
+	else:
+	    self.client.set(type, stocks)
 
     def put_stock_today(self, stock):
 	final_stocks = None

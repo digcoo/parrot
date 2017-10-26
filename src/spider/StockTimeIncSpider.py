@@ -15,6 +15,7 @@ from dbs.GeodeClient import *
 from dbs.RedisClient import *
 from vo.PlateInfo import *
 from vo.PlateDayInfo import *
+from dto.DataContainer import *
 from analyzer.StockTimeAnalyzer import *
 
 '''
@@ -62,7 +63,7 @@ class StockTimeIncSpider:
 
 	#推荐数据持久存储
 	if len(hit_list) > 0 and self.hit_persist:
-	    RedisClient.get_instance().put_today_rec(hit_list, 'time')
+	    RedisClient.get_instance().put_today_rec(hit_list, self.identify)
 
 	LogUtils.info('stock time recommend stock cnt = ' + str(len(hit_list)))
 #	LogUtils.info('stock time recommend stocks = ' + jsonpickle.encode(hit_list))
@@ -85,11 +86,13 @@ if __name__ == '__main__':
    
     symbols = CommonUtils.filter_symbols(symbols)
 
-    symbols = list(filter(lambda x: x == 'sh600330', symbols))
+    symbols = list(filter(lambda x: x == 'sz002117', symbols))
 
-    stock_analyzer = StockTimeAnalyzer(symbols, TimeUtils.get_current_datestamp())
+    data_container = DataContainer()
 
-    spider = StockTimeIncSpider(stock_analyzer = stock_analyzer, symbols = symbols, inc_persist = False, hit_persist = False, identify='time-0')
+    stock_analyzer = StockTimeAnalyzer(symbols, TimeUtils.get_current_datestamp(), data_container)
+
+    spider = StockTimeIncSpider(stock_analyzer = stock_analyzer, symbols = symbols, inc_persist = False, hit_persist = True, identify='time-1-0')
 
     spider.get_all_stocks_realtime_trades()
 
