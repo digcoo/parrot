@@ -79,7 +79,7 @@ def stock_day_realtime_spider():
 	    global symbols
 	    symbols = GeodeClient.get_instance().query_all_stock_symbols()
 	    if not with_gem:
-	        symbols = CommonUtils.filter_symbols(symbols)[:10]
+	        symbols = CommonUtils.filter_symbols(symbols)
 
  	    #初始化股票今日开盘情况(包括今日停盘、今日复盘的股票)
 	    CacheData.init()
@@ -91,7 +91,7 @@ def stock_day_realtime_spider():
 
    	    #初始化实时爬虫器
 	    global stock_day_inc_spider
-	    stock_day_inc_spider = StockDayIncSpider(stock_analyzer=stock_day_analyzer, symbols = symbols, inc_persist=False, hit_persist=False)
+	    stock_day_inc_spider = StockDayIncSpider(stock_analyzer=stock_day_analyzer, symbols = symbols, inc_persist=False, hit_persist=True)
 
 
 	    end  = int(time.mktime(datetime.datetime.now().timetuple()))

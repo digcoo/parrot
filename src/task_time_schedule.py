@@ -38,13 +38,13 @@ num_of_symbol_per_task = 200
 
 #定义本进程的起止位置
 stub_start = 0
-stub_end = 400
+stub_end = 600
 
 #定义本进程批次号
 batch_no = 1
 
 #进程池中最大进程数
-process_pool = multiprocessing.Pool(processes=2)
+process_pool = multiprocessing.Pool(processes=3)
 
 
 #每日初始化日期

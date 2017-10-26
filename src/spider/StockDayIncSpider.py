@@ -75,7 +75,7 @@ class StockDayIncSpider:
                 temp_symbols = self.symbols[start : end]
 	    
 	    #推荐数据持久存储
-	    if len(hit_list) > 0 and hit_persist:
+	    if len(hit_list) > 0 and self.hit_persist:
 		self.redis_client.put_today_rec(hit_list, 'day')
 
 #	    if not TimeUtils.is_after(self.stub_time):
