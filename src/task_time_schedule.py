@@ -34,11 +34,11 @@ global todaystamp
 todaystamp = 0
 
 #每个任务完成的symbols数
-num_of_symbol_per_task = 200
+num_of_symbol_per_task = 300
 
 #定义本进程的起止位置
 stub_start = 0
-stub_end = 600
+stub_end = 900
 
 #定义本进程批次号
 batch_no = 1
