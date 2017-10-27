@@ -44,7 +44,7 @@ stub_end = 600
 batch_no = 1
 
 #进程池中最大进程数
-process_pool = multiprocessing.Pool(processes=6)
+process_pool = multiprocessing.Pool(processes=4)
 
 
 #每日初始化日期

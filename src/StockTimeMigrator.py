@@ -20,8 +20,7 @@ class StockTimeMigrator:
 
 	self.identify = identify
 	try:
-	    data_container = DataContainer()
-	    stock_time_analyzer = StockTimeAnalyzer(symbols = symbols, todaystamp=todaystamp, data_container=data_container)
+	    stock_time_analyzer = StockTimeAnalyzer(symbols = symbols, todaystamp=todaystamp)
 	    self.stock_time_inc_spider = StockTimeIncSpider(stock_analyzer=stock_time_analyzer, symbols = symbols, inc_persist=False, hit_persist=True, identify = self.identify)
 	except Exception, e:
 	    traceback.print_exc()

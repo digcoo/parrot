@@ -417,7 +417,7 @@ class BaseStockUtils:
 	    realtime_stock_day = StockDayInfo()
 	    realtime_stock_day.op = stock_times[0].close
 	    realtime_stock_day.high = max([stock_time.close for stock_time in stock_times])
-	    realtime_stock_day.low = min([stock_time.low for stock_time in stock_times])
+	    realtime_stock_day.low = min([stock_time.close for stock_time in stock_times])
 	    realtime_stock_day.close = stock_times[len(stock_times) - 1].close
 	    realtime_stock_day.vol = sum([stock_time.vol for stock_time in stock_times]) 
 	    realtime_stock_day.money = sum([stock_time.money for stock_time in stock_times])

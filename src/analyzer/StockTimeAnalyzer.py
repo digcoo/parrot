@@ -15,44 +15,32 @@ from quant.ModelTime30 import *
 from quant.ModelTimeRise import *
 from quant.ModelTimeMin import *
 
+from StockDayPackMatcher import *
+
 class StockTimeAnalyzer:
 
-    def __init__(self, symbols, todaystamp, data_container):
+    def __init__(self, symbols, todaystamp):
 	try:
 #	    LogUtils.info('==============cache_hist_time start========================================')
             start  = int(time.mktime(datetime.datetime.now().timetuple()))
 
             self.todaystamp = todaystamp
-	    self.data_container = data_container
-	    start1  = int(time.mktime(datetime.datetime.now().timetuple()))
-	    self.latest_days = None
-	    self.latest_days = self.cache_hist_days(symbols)
-	    start2  = int(time.mktime(datetime.datetime.now().timetuple()))
-#	    print 'cache_hist_days cost seconds = ' + str(start2-start1)
-	    self.latest_weeks = None
-	    self.latest_weeks = self.cache_hist_weeks(symbols)
-	    start3  = int(time.mktime(datetime.datetime.now().timetuple()))
-#            print 'cache_hist_weeks cost seconds = ' + str(start3-start2)
-	    self.latest_months = None
-	    self.latest_months = self.cache_hist_months(symbols)
-	    start4  = int(time.mktime(datetime.datetime.now().timetuple()))
-#            print 'cache_hist_months cost seconds = ' + str(start4-start3)
-	    self.latest_times = None
-            self.latest_times = self.cache_hist_times(symbols)
-	    start5  = int(time.mktime(datetime.datetime.now().timetuple()))
-#            print 'cache_hist_times cost seconds = ' + str(start5-start4)
-            end = int(time.mktime(datetime.datetime.now().timetuple()))
+	    self.data_container = self.init_data_container(symbols)
+
 #            LogUtils.info('cache_hist_time take %s seconds' % (str(end - start), ))
 #	    LogUtils.info('==============cache_hist_times end========================================\n\n\n')
+
 
 
 #            LogUtils.info('==============stock_time_analyzer_model_init start========================================')
 	    start  = int(time.mktime(datetime.datetime.now().timetuple()))
 
-	    self.model_time_ma = ModelTimeMA(self.latest_times, self.todaystamp)
-	    self.model_time_30 = ModelTime30(self.latest_days, self.latest_times, self.todaystamp)
-	    self.model_time_rise = ModelTimeRise(self.latest_days, self.latest_times, self.todaystamp)
-	    self.model_time_min = ModelTimeMin(self.latest_days, self.latest_times, self.todaystamp)
+	    self.model_time_ma = ModelTimeMA(self.data_container.hist_times, self.todaystamp)
+	    self.model_time_30 = ModelTime30(self.data_container.hist_days, self.data_container.hist_times, self.todaystamp)
+	    self.model_time_rise = ModelTimeRise(self.data_container.hist_days, self.data_container.hist_times, self.todaystamp)
+	    self.model_time_min = ModelTimeMin(self.data_container.hist_days, self.data_container.hist_times, self.todaystamp)
+
+	    self.stock_day_pack_matcher = StockDayPackMatcher(symbols, todaystamp, self.data_container)
 
 	    end2= int(time.mktime(datetime.datetime.now().timetuple()))
 #	    LogUtils.info('stock_time_analzer_model_init take %s seconds' % (str(end - start), ))
@@ -62,76 +50,73 @@ class StockTimeAnalyzer:
 	    traceback.print_exc()
 	    sys.exit()
 
+    def init_data_container(self, symbols):
+	data_container = DataContainer()
+	data_container.hist_days = self.cache_hist_days(symbols)
+	data_container.hist_weeks = self.cache_hist_weeks(symbols)
+	data_container.hist_months = self.cache_hist_months(symbols)
+	data_container.hist_times = self.cache_hist_times(symbols)
+	return data_container
+
+
 
     #缓存历史日交易数据
     def cache_hist_days(self, symbols):
         allstocks_latest_days = {}
-        if self.data_container.hist_days is None:
-	    LogUtils.info('StockTimeAnalyzer cache_hist_days ......')
-            for symbol in symbols:
-#                if symbol != 'sh600619':
-#                    continue
-                stock_latest_days = GeodeClient.get_instance().query_stock_days_latest(symbol, 70)
-                allstocks_latest_days[symbol] = stock_latest_days
-            self.data_container.hist_days = allstocks_latest_days
+        LogUtils.info('StockTimeAnalyzer cache_hist_days ......')
+        for symbol in symbols:
+#            if symbol != 'sh600619':
+#                continue
+            stock_latest_days = GeodeClient.get_instance().query_stock_days_latest(symbol, 70)
+            allstocks_latest_days[symbol] = stock_latest_days
 
-        return self.data_container.hist_days
+        return allstocks_latest_days
 
     #缓存历史周交易数据
     def cache_hist_weeks(self, symbols):
         allstocks_latest_weeks = {}
-        if self.data_container.hist_weeks is None:
-	    LogUtils.info('StockTimeAnalyzer cache_hist_weeks ......')
-            for symbol in symbols:
-                stock_latest_weeks = GeodeClient.get_instance().query_stock_weeks_latest(symbol, 70)
-                allstocks_latest_weeks[symbol] = stock_latest_weeks
-            self.data_container.hist_weeks = allstocks_latest_weeks
+        LogUtils.info('StockTimeAnalyzer cache_hist_weeks ......')
+        for symbol in symbols:
+            stock_latest_weeks = GeodeClient.get_instance().query_stock_weeks_latest(symbol, 70)
+            allstocks_latest_weeks[symbol] = stock_latest_weeks
 
-        return self.data_container.hist_weeks
+        return allstocks_latest_weeks
 
 
     #缓存历史周交易数据
     def cache_hist_months(self, symbols):
         allstocks_latest_months = {}
-        if self.data_container.hist_months is None:
-	    LogUtils.info('StockTimeAnalyzer cache_hist_months ......')
-            for symbol in symbols:
-                stock_latest_months = GeodeClient.get_instance().query_stock_months_latest(symbol, 70)
-                allstocks_latest_months[symbol] = stock_latest_months
-            self.data_container.hist_months = allstocks_latest_months
+        LogUtils.info('StockTimeAnalyzer cache_hist_months ......')
+        for symbol in symbols:
+            stock_latest_months = GeodeClient.get_instance().query_stock_months_latest(symbol, 70)
+            allstocks_latest_months[symbol] = stock_latest_months
 
-        return self.data_container.hist_months
+        return allstocks_latest_months
 
 
     #缓存历史日分时交易数据
     def cache_hist_times(self, symbols):
-	if self.data_container.hist_times is not None:
-	    return self.data_container.hist_times
-
-	LogUtils.info('StockTimeAnalyzer cache_hist_times ......')
-
         allstocks_latest_times = {}
+        LogUtils.info('StockTimeAnalyzer cache_hist_times ......')
 
-	size = 50
-	page = 1
-	start = (page - 1) * size
-	end = page * size if page * size < len(symbols) else len(symbols)
-	temp_symbols = symbols[start : end]
-	while(len(temp_symbols) > 0):
-#	    temp_symbols.append('sh600519')
-	    stock_times = GeodeClient.get_instance().query_stock_time_trades_map_by_idlist(temp_symbols)
-	    allstocks_latest_times.update(stock_times)
+        size = 50
+        page = 1
+        start = (page - 1) * size
+        end = page * size if page * size < len(symbols) else len(symbols)
+        temp_symbols = symbols[start : end]
+        while(len(temp_symbols) > 0):
+#           temp_symbols.append('sh600519')
+            stock_times = GeodeClient.get_instance().query_stock_time_trades_map_by_idlist(temp_symbols)
+            allstocks_latest_times.update(stock_times)
 
-	    page += 1
-	    start = (page - 1) * size
-	    end = page * size if page * size < len(symbols) else len(symbols)
-	    temp_symbols = symbols[start : end]
+            page += 1
+            start = (page - 1) * size
+            end = page * size if page * size < len(symbols) else len(symbols)
+            temp_symbols = symbols[start : end]
 
-#	    break
+        allstocks_latest_times = ParseUtil.compose_stock_times_from_daytimes_map(allstocks_latest_times)
 
-	self.data_container.hist_times = ParseUtil.compose_stock_times_from_daytimes_map(allstocks_latest_times)
-
-	return self.data_container.hist_times
+        return allstocks_latest_times
 
 
     #模型匹配
@@ -151,6 +136,10 @@ class StockTimeAnalyzer:
 	    match_model = self.add_match_model(match_model, self.model_time_30.match(realtime_stock_day, today_times))  #ModelTime30(Time30)
 #	    match_model = self.add_match_model(match_model, self.model_time_rise.match(realtime_stock_day, today_times))  #ModelTimeRise(TimeRise)
 	    match_model = self.add_match_model(match_model, self.model_time_min.match(realtime_stock_day, today_times))  #ModelTimeMin(TimeMin)
+
+
+            match_model = self.add_match_model(match_model, self.stock_day_pack_matcher.match(realtime_stock_day))
+
 
             if match_model is not None  and self.filter_common_indicate(realtime_stock_day, match_model[0]):
                 return BaseStockUtils.compose_hit_data(realtime_stock_day, match_model)
