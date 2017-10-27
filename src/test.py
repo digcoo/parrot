@@ -1,10 +1,13 @@
-import os
+from utils.SystemConfig import *
 
-from sys import path
 
-path.append(os.getcwd() + '/vo')
+system_config = SystemConfig.get_instance()
 
-from StockInfo import *
 
-stock_info = StockInfo()
-stock_info.id = '312'
+print SystemConfig.get_instance().get(SystemConfig.PROJECT_SYMBOL, SystemConfig.SPIDER_PROCESSOR_NUM)
+
+print SystemConfig.get_instance().get(SystemConfig.PROJECT_SYMBOL, SystemConfig.REDIS_SERVER_IP)
+
+print SystemConfig.get_instance().get(SystemConfig.PROJECT_SYMBOL, SystemConfig.REDIS_SERVER_PORT)
+
+print SystemConfig.get_instance().get(SystemConfig.PROJECT_SYMBOL, SystemConfig.GEODE_SERVER_IP)

@@ -8,6 +8,7 @@ from utils.SinaStockUtils import *
 from utils.CommonUtils import *
 from dbs.GeodeClient import *
 from StockTimeMigrator import *
+from utils.SystemConfig import *
 
 
 #定义任务启动函数func
@@ -34,17 +35,17 @@ global todaystamp
 todaystamp = 0
 
 #每个任务完成的symbols数
-num_of_symbol_per_task = 200
+num_of_symbol_per_task = int(SystemConfig.get_instance().get(SystemConfig.PROJECT_SYMBOL, SystemConfig.SPIDER_SYMBOL_NUM_PER_PROCESSOR))
 
 #定义本进程的起止位置
-stub_start = 0
-stub_end = 600
+stub_start = int(SystemConfig.get_instance().get(SystemConfig.PROJECT_SYMBOL, SystemConfig.SPIDER_SYMBOL_STUB_START))
+stub_end = int(SystemConfig.get_instance().get(SystemConfig.PROJECT_SYMBOL, SystemConfig.SPIDER_SYMBOL_STUB_END))
 
 #定义本进程批次号
-batch_no = 1
+batch_no = SystemConfig.get_instance().get(SystemConfig.PROJECT_SYMBOL, SystemConfig.SPIDER_BATCH_NO)
 
 #进程池中最大进程数
-process_pool = multiprocessing.Pool(processes=4)
+process_pool = multiprocessing.Pool(processes=int(SystemConfig.get_instance().get(SystemConfig.PROJECT_SYMBOL, SystemConfig.SPIDER_PROCESSOR_NUM)))
 
 
 #每日初始化日期

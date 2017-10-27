@@ -7,6 +7,7 @@ import jsonpickle
 from sys import path
 path.append(os.getcwd() + '/vo')
 
+from utils.SystemConfig import *
 
 from PlateInfo import *
 from PlateDayInfo import *
@@ -26,7 +27,7 @@ class GeodeClient:
 	return GeodeClient.__instance
 
     def __init__(self):
-        self.client = GemfireClient(hostname = '52.80.22.16', port = '8080')
+        self.client = GemfireClient(hostname = SystemConfig.get_instance().get(SystemConfig.PROJECT_SYMBOL, SystemConfig.GEODE_SERVER_IP), port = SystemConfig.get_instance().get(SystemConfig.PROJECT_SYMBOL, SystemConfig.GEODE_SERVER_PORT))
 
 
     def get(self, key, region_name):

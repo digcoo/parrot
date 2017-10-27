@@ -3,6 +3,7 @@ import redis
 import json
 import jsonpickle
 from utils.TimeUtils import *
+from utils.SystemConfig import *
 
 class RedisClient:
 
@@ -16,7 +17,7 @@ class RedisClient:
 
 
     def __init__(self):
-        self.client = redis.Redis(host = '172.31.12.247', port = '6379')
+        self.client = redis.Redis(host = SystemConfig.get_instance().get(SystemConfig.PROJECT_SYMBOL, SystemConfig.REDIS_SERVER_IP), port = SystemConfig.get_instance().get(SystemConfig.PROJECT_SYMBOL, SystemConfig.REDIS_SERVER_PORT))
 	self.key_day = 'day'			
 	self.key_time = 'time'			#分时推荐map-time:key
 
