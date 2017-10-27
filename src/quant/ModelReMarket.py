@@ -2,21 +2,22 @@
 
 from utils.BaseStockUtils import *
 from utils.IndicatorUtils import *
+from dto.DataContainer import *
 
 import time
 import traceback
 import jsonpickle
 
-from dto.CacheData import *
 
 '''
 1、停盘后复盘
 '''
 class ModelReMarket:
 
-    def __init__(self, hist_days, todaystamp):
+    def __init__(self, hist_days, data_container, todaystamp):
 	self.todaystamp = todaystamp
-        self.cache_hist_days = hist_days      
+        self.cache_hist_days = hist_days
+	self.data_container = data_container
         self.candidate_stocks = self.prepare_candidate_stocks()
 	LogUtils.info('ModelReMarket candinates : ' + json.encode(self.candidate_stocks))
 
@@ -43,7 +44,7 @@ class ModelReMarket:
     def ReMarket(self, hist_days):
 
 	is_re_market = True
-	is_re_market = is_re_market & (hist_days[0].symbol in CacheData.re_market_symbols)
+	is_re_market = is_re_market & (hist_days[0].symbol in self.data_container.re_market_symbols)
 
 	if is_re_market:
             return ('ReMark', )

@@ -27,13 +27,13 @@ class ModelMinV:
             if last1_stock_day is None or last2_stock_day is None:
                 return None
 
-	    current_hist_days = BaseStockUtils.compose_realtime_stock_days(hist_days, realtime_stock_day)
+#	    current_hist_days = BaseStockUtils.compose_realtime_stock_days(hist_days, realtime_stock_day)
 
-            last1_max_daily_ma = IndicatorUtils.ALL_MA(hist_days, self.todaystamp)              #昨日日K线
-            last0_max_daily_ma = IndicatorUtils.ALL_MA(current_hist_days, TimeUtils.date_add(self.todaystamp, 7))              #今日日K线
+#            last1_max_daily_ma = IndicatorUtils.ALL_MA(hist_days, self.todaystamp)              #昨日日K线
+#            last0_max_daily_ma = IndicatorUtils.ALL_MA(current_hist_days, TimeUtils.date_add(self.todaystamp, 7))              #今日日K线
 
-	    last1_is_red = BaseStockUtils.pre_is_red(hist_days, 1, self.todaystamp)
-            last1_change_shadow = BaseStockUtils.pre_change_shadow(hist_days, 1, self.todaystamp)
+#	    last1_is_red = BaseStockUtils.pre_is_red(hist_days, 1, self.todaystamp)
+#            last1_change_shadow = BaseStockUtils.pre_change_shadow(hist_days, 1, self.todaystamp)
 
 #            LogUtils.info('last_stock_day=' + json.encode(last1_stock_day))
 #            LogUtils.info('realtime_stock_day = ' + json.encode(realtime_stock_day))

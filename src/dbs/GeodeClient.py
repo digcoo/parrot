@@ -52,11 +52,34 @@ class GeodeClient:
 
 
     def query_all_stocks(self):
-        stock_repo = self.client.create_repository('stock')
         paras = []
         paras_types = []
         return self.client.my_query("select_all_stocks", paras, paras_types)
 
+
+    def query_stocks_by_ids(self, ids):
+	stocks = []
+        page = 1
+        size = 50
+        start = (page -1) * size
+        end = page*size if page * size < len(ids) else len(ids)
+        temp_ids = ids[start : end]
+	ids_str = ParseUtil.parse_stock_ids(ids)
+	temp_stocks = self.get(ids_str, 'stock')
+        while(temp_stocks is not None and start < end):
+	    if len(temp_ids) > 1:
+		stocks.extend(temp_stocks.get('stock'))
+	    else:
+		stocks.append(temp_stocks)
+
+            page += 1
+            start = (page -1) * size
+            end = page*size if page * size < len(ids) else len(ids)
+            temp_ids = ids[start : end]
+	    ids_str = ParseUtil.parse_stock_ids(ids)
+	    temp_stocks = self.get(ids_str, 'stock')
+
+	return stocks	
 
 
     def add_batch_stocks(self, stocks):
@@ -65,7 +88,7 @@ class GeodeClient:
         start = (page -1) * size
         end = page*size if page * size < len(stocks) else len(stocks)
         temp_stocks = stocks[start : end]
-        while(len(temp_stocks) > 0):
+        while(len(temp_stocks) > 0 and start < end):
             self.put_all_stocks(temp_stocks)
             page += 1
             start = (page -1) * size
@@ -99,7 +122,7 @@ class GeodeClient:
         start = (page -1) * size
         end = page*size if page * size < len(stock_days) else len(stock_days)
         temp_stock_days = stock_days[start : end]
-        while(len(temp_stock_days) > 0):
+        while(len(temp_stock_days) > 0 and start < end):
             self.put_stocks_day(temp_stock_days)
             page += 1
             start = (page -1) * size
@@ -136,7 +159,7 @@ class GeodeClient:
         start = (page -1) * size
         end = page*size if page * size < len(stock_weeks) else len(stock_weeks)
         temp_stock_weeks = stock_weeks[start : end]
-        while(len(temp_stock_weeks) > 0):
+        while(len(temp_stock_weeks) > 0 and start < end):
             self.put_stock_weeks(temp_stock_weeks)
             page += 1
             start = (page -1) * size
@@ -170,7 +193,7 @@ class GeodeClient:
         start = (page -1) * size
         end = page*size if page * size < len(stock_months) else len(stock_months)
         temp_stock_months = stock_months[start : end]
-        while(len(temp_stock_months) > 0):
+        while(len(temp_stock_months) > 0 and start < end):
             self.put_stock_months(temp_stock_months)
             page += 1
             start = (page -1) * size
@@ -245,7 +268,7 @@ class GeodeClient:
         start = (page -1) * size
         end = page*size if page * size < len(plates) else len(plates)
         temp_plates = plates[start : end]
-        while(len(temp_plates) > 0):
+        while(len(temp_plates) > 0 and start < end):
             self.put_all_plates(temp_plates)
             page += 1
             start = (page -1) * size
@@ -279,7 +302,7 @@ class GeodeClient:
         start = (page -1) * size
         end = page*size if page * size < len(plate_days) else len(plate_days)
         temp_plate_days = plate_days[start : end]
-        while(len(temp_plate_days) > 0):
+        while(len(temp_plate_days) > 0 and start < end):
             self.put_plates_day(temp_plate_days)
             page += 1
             start = (page -1) * size
@@ -313,7 +336,7 @@ class GeodeClient:
         start = (page -1) * size
         end = page*size if page * size < len(plate_weeks) else len(plate_weeks)
         temp_plate_weeks = plate_weeks[start : end]
-        while(len(temp_plate_weeks) > 0):
+        while(len(temp_plate_weeks) > 0 and start < end):
             self.put_plates_week(temp_plate_weeks)
             page += 1
             start = (page -1) * size
@@ -344,7 +367,7 @@ class GeodeClient:
         start = (page -1) * size
         end = page*size if page * size < len(plate_months) else len(plate_months)
         temp_plate_months = plate_months[start : end]
-        while(len(temp_plate_months) > 0):
+        while(len(temp_plate_months) > 0 and start < end):
             self.put_plates_month(temp_plate_months)
             page += 1
             start = (page -1) * size

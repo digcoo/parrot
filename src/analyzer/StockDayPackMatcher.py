@@ -13,6 +13,7 @@ from quant.ModelCover import *
 from quant.ModelBurst import *
 from quant.ModelMinV import *
 from quant.ModelLastBreak import *
+from quant.ModelReMarket import *
 from quant.ModelMVol import *
 from quant.ModelBase import *
 from quant.ModelDWMMA import *
@@ -45,7 +46,7 @@ class StockDayPackMatcher:
 	    self.model_last_break = ModelLastBreak(self.latest_days, self.todaystamp)
 	    self.model_m_vol = ModelMVol(self.latest_days, self.todaystamp)
 	    self.model_cover = ModelCover(self.latest_days, self.todaystamp)
-#            self.model_re_market = ModelReMarket(self.latest_days, self.todaystamp)
+            self.model_re_market = ModelReMarket(self.latest_days, data_container, self.todaystamp)
 	    self.model_base = ModelBase(self.latest_days, self.latest_weeks, self.latest_months, self.todaystamp)
 	    self.model_dwm_ma = ModelDWMMA(self.latest_days, self.latest_weeks, self.todaystamp)
 	    self.model_cwm_ma = ModelCWMMA(self.latest_days, self.latest_weeks, self.latest_months, self.todaystamp)

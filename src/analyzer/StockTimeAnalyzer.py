@@ -1,5 +1,6 @@
 # encoding=utf8  
 import time
+import sys
 import jsonpickle
 import traceback
 
@@ -25,7 +26,7 @@ class StockTimeAnalyzer:
             start  = int(time.mktime(datetime.datetime.now().timetuple()))
 
             self.todaystamp = todaystamp
-	    self.data_container = self.init_data_container(symbols)
+	    self.data_container = DataContainer(symbols)
 
 #            LogUtils.info('cache_hist_time take %s seconds' % (str(end - start), ))
 #	    LogUtils.info('==============cache_hist_times end========================================\n\n\n')
@@ -49,74 +50,6 @@ class StockTimeAnalyzer:
 	except Exception, e:
 	    traceback.print_exc()
 	    sys.exit()
-
-    def init_data_container(self, symbols):
-	data_container = DataContainer()
-	data_container.hist_days = self.cache_hist_days(symbols)
-	data_container.hist_weeks = self.cache_hist_weeks(symbols)
-	data_container.hist_months = self.cache_hist_months(symbols)
-	data_container.hist_times = self.cache_hist_times(symbols)
-	return data_container
-
-
-
-    #缓存历史日交易数据
-    def cache_hist_days(self, symbols):
-        allstocks_latest_days = {}
-        LogUtils.info('StockTimeAnalyzer cache_hist_days ......')
-        for symbol in symbols:
-#            if symbol != 'sh600619':
-#                continue
-            stock_latest_days = GeodeClient.get_instance().query_stock_days_latest(symbol, 70)
-            allstocks_latest_days[symbol] = stock_latest_days
-
-        return allstocks_latest_days
-
-    #缓存历史周交易数据
-    def cache_hist_weeks(self, symbols):
-        allstocks_latest_weeks = {}
-        LogUtils.info('StockTimeAnalyzer cache_hist_weeks ......')
-        for symbol in symbols:
-            stock_latest_weeks = GeodeClient.get_instance().query_stock_weeks_latest(symbol, 70)
-            allstocks_latest_weeks[symbol] = stock_latest_weeks
-
-        return allstocks_latest_weeks
-
-
-    #缓存历史周交易数据
-    def cache_hist_months(self, symbols):
-        allstocks_latest_months = {}
-        LogUtils.info('StockTimeAnalyzer cache_hist_months ......')
-        for symbol in symbols:
-            stock_latest_months = GeodeClient.get_instance().query_stock_months_latest(symbol, 70)
-            allstocks_latest_months[symbol] = stock_latest_months
-
-        return allstocks_latest_months
-
-
-    #缓存历史日分时交易数据
-    def cache_hist_times(self, symbols):
-        allstocks_latest_times = {}
-        LogUtils.info('StockTimeAnalyzer cache_hist_times ......')
-
-        size = 50
-        page = 1
-        start = (page - 1) * size
-        end = page * size if page * size < len(symbols) else len(symbols)
-        temp_symbols = symbols[start : end]
-        while(len(temp_symbols) > 0):
-#           temp_symbols.append('sh600519')
-            stock_times = GeodeClient.get_instance().query_stock_time_trades_map_by_idlist(temp_symbols)
-            allstocks_latest_times.update(stock_times)
-
-            page += 1
-            start = (page - 1) * size
-            end = page * size if page * size < len(symbols) else len(symbols)
-            temp_symbols = symbols[start : end]
-
-        allstocks_latest_times = ParseUtil.compose_stock_times_from_daytimes_map(allstocks_latest_times)
-
-        return allstocks_latest_times
 
 
     #模型匹配
