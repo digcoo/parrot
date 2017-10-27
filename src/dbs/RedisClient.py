@@ -16,7 +16,7 @@ class RedisClient:
 
 
     def __init__(self):
-        self.client = redis.Redis(host = '127.0.0.1', port = '6379')
+        self.client = redis.Redis(host = '172.31.12.247', port = '6379')
 	self.key_day = 'day'			
 	self.key_time = 'time'			#分时推荐map-time:key
 
