@@ -13,6 +13,7 @@ from dto.DataContainer import *
 from quant.ModelTimeMA import *
 from quant.ModelTime30 import *
 from quant.ModelTimeRise import *
+from quant.ModelTimeMin import *
 
 class StockTimeAnalyzer:
 
@@ -51,6 +52,7 @@ class StockTimeAnalyzer:
 	    self.model_time_ma = ModelTimeMA(self.latest_times, self.todaystamp)
 	    self.model_time_30 = ModelTime30(self.latest_days, self.latest_times, self.todaystamp)
 	    self.model_time_rise = ModelTimeRise(self.latest_days, self.latest_times, self.todaystamp)
+	    self.model_time_min = ModelTimeMin(self.latest_days, self.latest_times, self.todaystamp)
 
 	    end2= int(time.mktime(datetime.datetime.now().timetuple()))
 #	    LogUtils.info('stock_time_analzer_model_init take %s seconds' % (str(end - start), ))
@@ -147,7 +149,8 @@ class StockTimeAnalyzer:
 
 #	    match_model = self.add_match_model(match_model, self.model_time_ma.match(realtime_stock_trades_map))  #ModelTimeMA(TimeMA)
 	    match_model = self.add_match_model(match_model, self.model_time_30.match(realtime_stock_day, today_times))  #ModelTime30(Time30)
-	    match_model = self.add_match_model(match_model, self.model_time_rise.match(realtime_stock_day, today_times))  #ModelTimeRise(TimeRise)
+#	    match_model = self.add_match_model(match_model, self.model_time_rise.match(realtime_stock_day, today_times))  #ModelTimeRise(TimeRise)
+	    match_model = self.add_match_model(match_model, self.model_time_min.match(realtime_stock_day, today_times))  #ModelTimeMin(TimeMin)
 
             if match_model is not None  and self.filter_common_indicate(realtime_stock_day, match_model[0]):
                 return BaseStockUtils.compose_hit_data(realtime_stock_day, match_model)

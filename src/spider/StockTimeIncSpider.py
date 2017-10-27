@@ -49,7 +49,7 @@ class StockTimeIncSpider:
                 if self.stock_analyzer is not None:
                     batch_hit = self.analyze({symbol : realtime_time_stock_trades, 'last_close' : last_close, 'symbol' : symbol, 'today_stamp' : date_stamp})
                     if  batch_hit is not None :
-#			LogUtils.info('stock_time_hit : ' + jsonpickle.encode(batch_hit))
+			LogUtils.info('stock_time_hit : ' + jsonpickle.encode(batch_hit))
                         hit_list.append(batch_hit)
 
 		if self.inc_persist:

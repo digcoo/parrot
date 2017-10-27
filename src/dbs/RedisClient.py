@@ -39,11 +39,13 @@ class RedisClient:
 	    local_rec_stocks_map = {}
 	
 	if type == 'day':
-	    local_rec_stocks_map[self.key_day] = stocks
-	    self.client.set(str(key), local_rec_stocks_map)
+	    self.client.set('day', stocks)
+#	    local_rec_stocks_map[self.key_day] = stocks
+#	    self.client.set(str(key), local_rec_stocks_map)
 	elif type == 'time':
-	    local_rec_stocks_map[self.key_time] = stocks
-	    self.client.set(str(key), local_rec_stocks_map)
+	    self.client.set('time', stocks)
+#	    local_rec_stocks_map[self.key_time] = stocks
+#	    self.client.set(str(key), local_rec_stocks_map)
 	else:
 	    self.client.set(type, stocks)
 

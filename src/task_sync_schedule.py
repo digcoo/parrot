@@ -20,7 +20,7 @@ from dto.CacheData import *
 scheduler = BlockingScheduler()
 
 #股票日交易列表:每个交易日15：10更新交易数据
-@scheduler.scheduled_job('cron', id='stock_day_inc_spider', minute='25', day_of_week='0-4', hour='16')
+@scheduler.scheduled_job('cron', id='stock_day_inc_spider', minute='40', day_of_week='0-4', hour='15')
 def stock_day_inc_spider():
 
     try:

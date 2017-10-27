@@ -21,13 +21,14 @@ class ModelTimeRise:
     def match(self, realtime_stock_day, realtime_stock_times):
 	try:
 
+            min5_times = BaseStockUtils.compose_stock_trades_for_minute(realtime_stock_times, 5)
 	    min15_times = BaseStockUtils.compose_stock_trades_for_minute(realtime_stock_times, 15)
 	    min30_times = BaseStockUtils.compose_stock_trades_for_minute(realtime_stock_times, 30)
 	    min60_times = BaseStockUtils.compose_stock_trades_for_minute(realtime_stock_times, 60)
 
 	    is_hit = True
 	    is_hit_min15 = len(min15_times) > 1 and min15_times[1].high > min15_times[0].high and min15_times[1].close > realtime_stock_day.last_close		#15分钟线
-	    is_hit_min30 = len(min30_times) > 1 and min30_times[1].high > min30_times[0].high and min30_times[1].close > realtime_stock_day.last_close               #30分钟线
+	    is_hit_min30 = len(min30_times) > 1 and min30_times[1].high > min30_times[0].high and min30_times[1].close > realtime_stock_day.last_close          #30分钟线
 #	    is_hit_min60 = len(min60_times) > 1 and self.max_stock_high(min60_times[1:]) > min30_times[0].high and min60_times[len(min60_times)-1].close > max(realtime_stock_day.last_close, realtime_stock_day.money / realtime_stock_day.vol)               #60分钟线
 
 #	    print is_hit

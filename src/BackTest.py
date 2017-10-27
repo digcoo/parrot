@@ -6,6 +6,7 @@ path.append(os.getcwd() + '/quant')
 path.append(os.getcwd() + '/vo')
 path.append(os.getcwd() + '/utils')
 path.append(os.getcwd() + '/utils/incubation')
+path.append(os.getcwd() + '/dbs')
 
 import jsonpickle as json
 
@@ -44,6 +45,7 @@ from ModelTime30 import *
 from ModelLastTime30 import *
 from ModelTimeRise import *
 from ModelCover import *
+from ModelTimeMin import *
 
 class BackTest:
 
@@ -256,7 +258,7 @@ class BackTest:
 #	print jsonpickle.encode(latest_times)
 
 	today_stamp = TimeUtils.get_current_datestamp()
-	model_test = ModelTime30(hist_symbols_days, latest_times, today_stamp)
+	model_test = ModelTimeMin(hist_symbols_days, latest_times, today_stamp)
 
 	today_stamp, today_times, last_close = ThsStockUtils.get_realtime_time_stock_trades(symbol)
 	
@@ -272,7 +274,7 @@ if __name__ == '__main__':
 #    base_test.test_for_symbol_today_match('sh600569')
 #    base_test.test_for_week_ma_match('sz000058')
 #    base_test.test_for_month_ma_match('sz000633')
-    base_test.test_for_time_ma_match('sz002138')
+    base_test.test_for_time_ma_match('sz002828')
 
 #    base_test.import_stocks_days()
 #    base_test.latest_resistance_price('sz000008')

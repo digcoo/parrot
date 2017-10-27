@@ -34,17 +34,17 @@ global todaystamp
 todaystamp = 0
 
 #每个任务完成的symbols数
-num_of_symbol_per_task = 300
+num_of_symbol_per_task = 200
 
 #定义本进程的起止位置
 stub_start = 0
-stub_end = 900
+stub_end = 600
 
 #定义本进程批次号
 batch_no = 1
 
 #进程池中最大进程数
-process_pool = multiprocessing.Pool(processes=3)
+process_pool = multiprocessing.Pool(processes=6)
 
 
 #每日初始化日期
