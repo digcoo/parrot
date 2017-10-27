@@ -21,8 +21,8 @@ class ModelTimeMin:
     def match(self, realtime_stock_day, realtime_stock_times):
 	try:
 
-
-            min5_times = BaseStockUtils.compose_stock_trades_for_minute(realtime_stock_times, 5)
+	    min_times	= realtime_stock_times
+	    min5_times	= BaseStockUtils.compose_stock_trades_for_minute(realtime_stock_times, 5)
 	    min15_times = BaseStockUtils.compose_stock_trades_for_minute(realtime_stock_times, 15)
 	    min30_times = BaseStockUtils.compose_stock_trades_for_minute(realtime_stock_times, 30)
 	    min60_times = BaseStockUtils.compose_stock_trades_for_minute(realtime_stock_times, 60)
@@ -32,9 +32,9 @@ class ModelTimeMin:
 
             #5分钟策略
             if len(min5_times) <= 1:            #5分钟内
-                is_hit = False
+		is_hit = min_times[len(min_times) - 1].close > max([min_time.close for min_time in min_times[:len(min_times) - 1]]) and min_times[len(min_times) - 1].close > realtime_stock_day.last_close
             elif len(min5_times) <= 3:          #15分钟内
-                is_hit = min5_times[len(min5_times) - 1].high > max([min_time.high for min_time in min_times]) and min5_times[len(min5_times) - 1].close > realtime_stock_day.last_close
+                is_hit = min5_times[len(min5_times) - 1].high > max([min5_time.high for min5_time in min5_times[:len(min5_times) - 1]]) and min5_times[len(min5_times) - 1].close > realtime_stock_day.last_close
 #		print '5-15:' + str(is_hit)
             elif len(min5_times) <= 6:          #15-30分钟内
                 is_hit = min15_times[1].high > min15_times[0].high and min15_times[1].close > realtime_stock_day.last_close

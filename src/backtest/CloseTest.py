@@ -1,10 +1,9 @@
 #encoding=utf-8
-
+import os
 from sys import path
-path.append('/home/ubuntu/scripts')
-path.append('/home/ubuntu/scripts/utils')
-path.append('/home/ubuntu/scripts/quant')
-path.append('/home/ubuntu/scripts/quant/incubation')
+path.append(os.getcwd() + '/utils')
+path.append(os.getcwd() + '/quant')
+path.append(os.getcwd() +  '/quant/incubation')
 
 from CommonUtils import *
 from TimeUtils import *

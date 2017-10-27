@@ -15,6 +15,7 @@ from quant.ModelTimeMA import *
 from quant.ModelTime30 import *
 from quant.ModelTimeRise import *
 from quant.ModelTimeMin import *
+from quant.ModelTimeV60 import *
 
 from StockDayPackMatcher import *
 
@@ -40,6 +41,7 @@ class StockTimeAnalyzer:
 	    self.model_time_30 = ModelTime30(self.data_container.hist_days, self.data_container.hist_times, self.todaystamp)
 	    self.model_time_rise = ModelTimeRise(self.data_container.hist_days, self.data_container.hist_times, self.todaystamp)
 	    self.model_time_min = ModelTimeMin(self.data_container.hist_days, self.data_container.hist_times, self.todaystamp)
+	    self.model_time_v60 = ModelTimeV60(self.data_container.hist_days, self.data_container.hist_times, self.todaystamp)
 
 	    self.stock_day_pack_matcher = StockDayPackMatcher(symbols, todaystamp, self.data_container)
 
@@ -69,6 +71,7 @@ class StockTimeAnalyzer:
 	    match_model = self.add_match_model(match_model, self.model_time_30.match(realtime_stock_day, today_times))  #ModelTime30(Time30)
 #	    match_model = self.add_match_model(match_model, self.model_time_rise.match(realtime_stock_day, today_times))  #ModelTimeRise(TimeRise)
 	    match_model = self.add_match_model(match_model, self.model_time_min.match(realtime_stock_day, today_times))  #ModelTimeMin(TimeMin)
+	    match_model = self.add_match_model(match_model, self.model_time_v60.match(realtime_stock_day, today_times))  #ModelTimeV60(TimeV60)
 
 
             match_model = self.add_match_model(match_model, self.stock_day_pack_matcher.match(realtime_stock_day))
