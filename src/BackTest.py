@@ -48,6 +48,10 @@ from ModelCover import *
 from ModelTimeMin import *
 from ModelTimeV60 import *
 
+
+from analyzer.StockTimeAnalyzer import *
+from spider.StockTimeIncSpider import *
+
 class BackTest:
 
     def __init__(self):
@@ -268,6 +272,22 @@ class BackTest:
 
 	print model_test.match(realtime_stock_day, today_times)
 
+    def test_for_spider(self, symbol):
+#	symbols = GeodeClient.get_instance().query_all_stock_symbols()
+
+#	symbols = CommonUtils.filter_symbols(symbols)
+
+#	symbols = list(filter(lambda x: x == 'sz002117', symbols))
+
+	symbols = [symbol]
+
+	stock_analyzer = StockTimeAnalyzer(symbols, TimeUtils.get_current_datestamp())
+
+	spider = StockTimeIncSpider(stock_analyzer = stock_analyzer, symbols = symbols, inc_persist = False, hit_persist = False, identify='time-0-0')
+
+	spider.get_all_stocks_realtime_trades()
+	
+
 
 if __name__ == '__main__':
     base_test = BackTest()
@@ -275,7 +295,8 @@ if __name__ == '__main__':
 #    base_test.test_for_symbol_today_match('sh600569')
 #    base_test.test_for_week_ma_match('sz000058')
 #    base_test.test_for_month_ma_match('sz000633')
-    base_test.test_for_time_ma_match('sh601018')
+#    base_test.test_for_time_ma_match('sz002227')
+    base_test.test_for_spider('sh603978')
 
 #    base_test.import_stocks_days()
 #    base_test.latest_resistance_price('sz000008')

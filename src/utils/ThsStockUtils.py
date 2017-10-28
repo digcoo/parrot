@@ -33,8 +33,10 @@ class ThsStockUtils:
     def get_html(url, stock):
         try:
             headers = {}
-            headers['Referer'] = ThsStockUtils.stock_detail_url.format(stock.id[2:])
+#            headers['Referer'] = ThsStockUtils.stock_detail_url.format(stock.id[2:])
+	    headers['Referer'] = 'http://stockpage.10jqka.com.cn/HQ_v4.html'
 	    headers['Cookie'] = 'v=AXbsO22yMyTISMfA5Mnezwitx6d9l7rRDNvuNeBfYtn0IxgTSCcK4dxrPkCw'
+	    headers['User-Agent'] = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'
             ntries = 100
             loop = 0
             while loop < ntries:

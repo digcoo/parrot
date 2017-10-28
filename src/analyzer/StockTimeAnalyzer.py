@@ -61,11 +61,15 @@ class StockTimeAnalyzer:
 	try:
 
 	    symbol = realtime_stock_trades_map.get('symbol')
-	    last_close = realtime_stock_trades_map.get('last_close')
+#	    last_close = realtime_stock_trades_map.get('last_close')		#同花顺数据不稳定
+	    last1_stock_day = BaseStockUtils.pre_stock_day(self.data_container.hist_days[symbol], 1, self.todaystamp)
+	    last_close = last1_stock_day.close if last1_stock_day is not None else None
 	    today_stamp = realtime_stock_trades_map.get('today_stamp')
 
 	    today_times = realtime_stock_trades_map.get(symbol)
 	    realtime_stock_day = BaseStockUtils.compose_realtime_stock_day_from_time_trades(today_times, symbol=symbol, last_close=last_close, today_stamp=today_stamp)
+
+	    print jsonpickle.encode(realtime_stock_day)
 
 #	    match_model = self.add_match_model(match_model, self.model_time_ma.match(realtime_stock_trades_map))  #ModelTimeMA(TimeMA)
 	    match_model = self.add_match_model(match_model, self.model_time_30.match(realtime_stock_day, today_times))  #ModelTime30(Time30)
