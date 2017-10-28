@@ -69,8 +69,6 @@ class StockTimeAnalyzer:
 	    today_times = realtime_stock_trades_map.get(symbol)
 	    realtime_stock_day = BaseStockUtils.compose_realtime_stock_day_from_time_trades(today_times, symbol=symbol, last_close=last_close, today_stamp=today_stamp)
 
-	    print jsonpickle.encode(realtime_stock_day)
-
 #	    match_model = self.add_match_model(match_model, self.model_time_ma.match(realtime_stock_trades_map))  #ModelTimeMA(TimeMA)
 	    match_model = self.add_match_model(match_model, self.model_time_30.match(realtime_stock_day, today_times))  #ModelTime30(Time30)
 #	    match_model = self.add_match_model(match_model, self.model_time_rise.match(realtime_stock_day, today_times))  #ModelTimeRise(TimeRise)
