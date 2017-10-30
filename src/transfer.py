@@ -6,6 +6,7 @@ from utils.FileUtils import *
 from dbs.GeodeClient import *
 #from web.RecommendPoolServer import *
 from spider.StockListIncSpider import *
+from spider.StockDayIncSpider import *
 from spider.PlateListIncForThsSpider import *
 from spider.StockTimeIncSpider import *
 
@@ -18,6 +19,18 @@ def stock_list_inc_start():
 
     except Exception, e:
 	traceback.print_exc()
+
+
+
+def stock_day_inc_start():
+    try:
+	symbols = GeodeClient.get_instance().query_all_stock_symbols()
+        stock_day_inc_spider = StockDayIncSpider(symbols, inc_persist = True)
+        stock_day_inc_spider.get_allstocks_day()
+
+    except Exception, e:
+        traceback.print_exc()
+
 
 
 def plate_list_inc_start():
@@ -49,8 +62,9 @@ if __name__ == '__main__':
     try:
 
 #        stock_list_inc_start()
+	stock_day_inc_start()
 #	plate_list_inc_start()
-	stock_time_inc_start()
+#	stock_time_inc_start()
 
     except Exception, e:
         traceback.print_exc()
