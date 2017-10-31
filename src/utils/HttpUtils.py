@@ -12,11 +12,11 @@ class HttpUtils:
         response = None
         try:
             req = urllib2.Request(url, headers=headers)
-#	    req.add_header('Referer', 'http://q.10jqka.com.cn/gn/detail/code/300008/')
 	    response = urllib2.urlopen(req)
             buf = response.read()
 	    return buf.decode(charset)
         except Exception, e:
+#	    traceback.print_exc()
 	    if hasattr(e, 'code'):
 		LogUtils.info('get url = %s, return_code=%s, reason = %s' % (url, e.code, e.reason))
 		if e.code == 404:
