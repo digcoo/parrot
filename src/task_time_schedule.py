@@ -18,10 +18,6 @@ def stock_time_migrator_start(stock_time_migrator):
 
 scheduler = BlockingScheduler()
 
-#是否新的交易日
-global is_new_day
-is_new_day = True
-
 #总股票symbols
 global symbols
 symbols = None
@@ -48,24 +44,6 @@ batch_no = SystemConfig.get_instance().get(SystemConfig.PROJECT_SYMBOL, SystemCo
 process_pool = multiprocessing.Pool(processes=int(SystemConfig.get_instance().get(SystemConfig.PROJECT_SYMBOL, SystemConfig.SPIDER_PROCESSOR_NUM)))
 
 
-#每日初始化日期
-@scheduler.scheduled_job('cron', id='task_new_day_init', hour='9', day_of_week='0-4', max_instances=1)
-def task_new_day_init():
-    try:
-	LogUtils.info('===============================task_new_day_init start=============================================')
-	start  = int(time.mktime(datetime.datetime.now().timetuple()))
-
-	global is_new_day	
-	is_new_day = True
-
-	end  = int(time.mktime(datetime.datetime.now().timetuple()))
-	LogUtils.info('task_new_day_init take %s seconds' % (str(end - start), ))
-	LogUtils.info('===============================task_new_day_init end=============================================\n\n\n')
-
-    except Exception, e:
-	traceback.print_exc
-
-
 #股票日交易列表:每个交易日9点同步实时交易数据
 @scheduler.scheduled_job('cron', id='stock_time_realtime_spider', minute='*/1', hour='9-14', day_of_week='0-4', max_instances=1)
 def stock_time_realtime_spider():
@@ -76,15 +54,12 @@ def stock_time_realtime_spider():
 
 	with_gem = False
 
-	global is_new_day
-	if is_new_day:
+	global todaystamp
+	if TimeUtils.get_current_datestamp > todaystamp:	#新的交易日
 	    LogUtils.info('=====================init_current_time_data start=============================================')
 	    start  = int(time.mktime(datetime.datetime.now().timetuple()))
 
-	    is_new_day = False
-
 	    #更新当前时间戳
-	    global todaystamp
 	    todaystamp = TimeUtils.get_current_datestamp()
 
 	    #初始化当前股票列表

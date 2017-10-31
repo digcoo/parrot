@@ -89,6 +89,7 @@ class DataContainer:
     def cache_market_stocks(self, symbols):
 	#获取股票数据
 	all_stocks = GeodeClient.get_instance().query_stocks_by_ids(symbols)
+	
 	#获取当日开盘数据
 	current_stocks_day = SinaStockUtils.get_current_stock_days(symbols)
 	(suspend_stocks, market_stocks, re_market_stocks) = ParseUtil.compose_stocks_market(all_stocks, current_stocks_day)

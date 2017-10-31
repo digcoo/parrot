@@ -296,7 +296,7 @@ if __name__ == '__main__':
 #    base_test.test_for_week_ma_match('sz000058')
 #    base_test.test_for_month_ma_match('sz000633')
 #    base_test.test_for_time_ma_match('sz002227')
-    base_test.test_for_spider('sh603978')
+    base_test.test_for_spider('sh600739')
 
 #    base_test.import_stocks_days()
 #    base_test.latest_resistance_price('sz000008')
