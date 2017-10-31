@@ -55,7 +55,7 @@ def stock_time_realtime_spider():
 	with_gem = False
 
 	global todaystamp
-	if TimeUtils.get_current_datestamp > todaystamp:	#新的交易日
+	if TimeUtils.get_current_datestamp() > todaystamp:	#新的交易日
 	    LogUtils.info('=====================init_current_time_data start=============================================')
 	    start  = int(time.mktime(datetime.datetime.now().timetuple()))
 

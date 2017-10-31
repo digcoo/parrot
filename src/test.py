@@ -1,5 +1,6 @@
 from utils.SystemConfig import *
 from dbs.GeodeClient import *
+from utils.TimeUtils import *
 
 system_config = SystemConfig.get_instance()
 
@@ -16,3 +17,4 @@ print SystemConfig.get_instance().get(SystemConfig.PROJECT_SYMBOL, SystemConfig.
 print jsonpickle.encode(GeodeClient.get_instance().query_stocks_by_ids(['sh601111', 'sh601101', 'sh600111']))
 
 print jsonpickle.encode(GeodeClient.get_instance().query_stocks_by_ids(['sh601111']))
+
