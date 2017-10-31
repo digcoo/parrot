@@ -36,11 +36,16 @@ class StockTimeIncSpider:
     def get_all_stocks_realtime_trades(self):
 	fail_symbols = []
 	hit_list = []
+	flag = False
         for symbol in self.symbols:
 	    try:
-#		if symbol != 'sz002909':
+		LogUtils.info('=================================stock_time_inc_for_ths, symbol=%s======================================================\n' % (symbol, ))
+		if not flag and symbol == 'sz002702':
+		    flag = True
+		
+#		if not flag:
 #		    continue
-#		LogUtils.info('=================================stock_time_inc_for_ths, symbol=%s======================================================\n' % (symbol, ))
+
 		date_stamp, realtime_time_stock_trades, last_close = ThsStockUtils.get_realtime_time_stock_trades(symbol)
 		if realtime_time_stock_trades is None:
 		    fail_symbols.append(symbol)
