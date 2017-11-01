@@ -18,3 +18,4 @@ class StockDayInfo:
 	self.sell1_vol = 0.0
 	self.avg = 0.0
 	self.day = None
+	self.minute = None

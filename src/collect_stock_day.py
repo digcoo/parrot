@@ -10,6 +10,7 @@ from spider.StockDayIncSpider import *
 from spider.PlateListIncForThsSpider import *
 from spider.StockTimeIncSpider import *
 from spider.StockTimeIncForEMSpider import *
+from spider.StockTimeIncForSinaSpider import *
 
 
 def stock_list_inc_start():
@@ -49,8 +50,8 @@ def stock_time_inc_start():
 
     try:
 
-	symbols = GeodeClient.get_instance().query_all_stock_symbols()
-        stock_time_inc_spider = StockTimeIncSpider(stock_analyzer=None, symbols=symbols, inc_persist=False, hit_persist=False, identify=None)
+	symbols = GeodeClient.get_instance().query_all_stock_symbols()[:2]
+        stock_time_inc_spider = StockTimeIncForSinaSpider(stock_analyzer=None, symbols=symbols, inc_persist=False, hit_persist=False, identify=None)
         stock_time_inc_spider.get_all_stocks_realtime_trades()
 
     except Exception, e:

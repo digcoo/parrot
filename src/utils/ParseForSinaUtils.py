@@ -12,7 +12,7 @@ from utils.LogUtils import *
 
 from bs4 import BeautifulSoup
 
-class ParseUtil:
+class ParseForSinaUtils:
 
     def __init__(self):
 	self.name = ''
@@ -23,7 +23,7 @@ class ParseUtil:
 	if content is not None:
 	    lines = content.splitlines()
 	    for i in range(0, len(lines)):
-		stock_day = ParseUtil.compose_stock_day_info(lines[i].encode('utf-8'))
+		stock_day = ParseForSinaUtils.compose_stock_day_info(lines[i].encode('utf-8'))
 		if stock_day is not None and stock_day.vol > 0 and stock_day.close > 0:
 		    stocks_day.append(stock_day)
 	return stocks_day
@@ -50,6 +50,7 @@ class ParseUtil:
             stock.buy1_vol = float(split[10])   #买一量(股)
             stock.sell1_vol = float(split[20])   #卖一量(股)
             stock.day = int(time.mktime(time.strptime(split[30].strip(), "%Y-%m-%d")))
+	    stock.minute = int(time.mktime(time.strptime(split[30].strip() + split[31].strip(), "%Y-%m-%d%H:%M:%S")))
 #           stock.day = datetime.datetime.strptime(split[30].strip(), "%Y-%m-%d").date()
 	    if float(split[32]) == 0:
 		stock.status = 'on_market'
@@ -112,6 +113,7 @@ class ParseUtil:
 	return None
 
 
+    '''	封装当日开始的股票列表	'''
     @staticmethod
     def compose_stocks_market(all_stocks, current_stocks_day):
         market_stocks = []
@@ -217,3 +219,37 @@ class ParseUtil:
 	    allstocks_times_map[symbol] = stock_all_daytimes
 
 	return allstocks_times_map
+
+
+    '''	将日交易数据分装为日分时数据	'''
+    @staticmethod
+    def compose_realtime_stock_trades(realtime_stock_times_map, realtime_stock_day):
+	if realtime_stock_day is not None and realtime_stock_day.vol > 0.1:
+	    date_str = TimeUtils.datestamp2datestring(realtime_stock_day.day, TimeUtils.DATE_FORMAT_YYYYMMDD)
+	    time1130_stamp = TimeUtils.datestring2datestamp(date_str + '1130', TimeUtils.TIME_FORMAT_YYYYMMDDHHMM)
+	    time1300_stamp = TimeUtils.datestring2datestamp(date_str + '1300', TimeUtils.TIME_FORMAT_YYYYMMDDHHMM)
+	    time1500_stamp = TimeUtils.datestring2datestamp(date_str + '1500', TimeUtils.TIME_FORMAT_YYYYMMDDHHMM)
+
+	    min_str = ''
+	    if realtime_stock_day.minute > time1130_stamp and realtime_stock_day.minute < time1300_stamp:
+		min_str = date_str + '1130'
+	    elif realtime_stock_day.minute > time1500_stamp:
+		min_str = date_str + '1500'
+	    else:
+		min_str = TimeUtils.datestamp2datestring(realtime_stock_day.minute, TimeUtils.TIME_FORMAT_YYYYMMDDHHMM)
+
+	    realtime_stock_day.id = realtime_stock_day.symbol + min_str
+	    realtime_stock_day.day = TimeUtils.datestring2datestamp(min_str, TimeUtils.TIME_FORMAT_YYYYMMDDHHMM)
+
+	    realtime_stock_times = realtime_stock_times_map.get(realtime_stock_day.symbol)
+	    if realtime_stock_times is None:
+		return [realtime_stock_day]
+	    else:
+		last_realtime_stock_time = realtime_stock_times[len(realtime_stock_times) - 1]	#将当前数据覆盖当前分钟的分时数据
+		if last_realtime_stock_time.day == realtime_stock_day.day:
+		    realtime_stock_times[len(realtime_stock_times) - 1] = realtime_stock_day
+		else:
+		    realtime_stock_times.append(realtime_stock_day)
+	    return realtime_stock_times
+
+	return None

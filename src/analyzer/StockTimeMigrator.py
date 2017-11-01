@@ -7,6 +7,7 @@ from dto.DataContainer import *
 from analyzer.StockTimeAnalyzer import *
 from spider.StockTimeIncSpider import *
 from spider.StockTimeIncForEMSpider import *
+from spider.StockTimeIncForSinaSpider import *
 from utils.LogUtils import *
 
 class StockTimeMigrator:
@@ -22,7 +23,7 @@ class StockTimeMigrator:
 	self.identify = identify
 	try:
 	    stock_time_analyzer = StockTimeAnalyzer(symbols = symbols, todaystamp=todaystamp)
-	    self.stock_time_inc_spider = StockTimeIncSpider(stock_analyzer=stock_time_analyzer, symbols = symbols, inc_persist=False, hit_persist=True, identify = self.identify)
+	    self.stock_time_inc_spider = StockTimeIncForSinaSpider(stock_analyzer=stock_time_analyzer, symbols = symbols, inc_persist=False, hit_persist=True, identify = self.identify)
 	except Exception, e:
 	    traceback.print_exc()
 

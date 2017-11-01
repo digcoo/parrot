@@ -21,6 +21,9 @@ class ModelTimeMin:
     def match(self, realtime_stock_day, realtime_stock_times):
 	try:
 
+	    if len(realtime_stock_times) < 2:
+		return None
+
 	    min_times	= realtime_stock_times
 	    min5_times	= BaseStockUtils.compose_stock_trades_for_minute(realtime_stock_times, 5)
 	    min15_times = BaseStockUtils.compose_stock_trades_for_minute(realtime_stock_times, 15)
@@ -55,7 +58,3 @@ class ModelTimeMin:
 #	    print jsonpickle.encode(realtime_stock_times_map)
 
 	return None
-
-    def max_stock_high(self, stock_times):
-	highs = [stock_time.high for stock_time in stock_times]
-	return max(highs)

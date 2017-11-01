@@ -16,8 +16,6 @@ class StockDayIncSpider:
 
     def __init__(self, symbols, inc_persist):
 	self.stock_single_url = 'http://hq.sinajs.cn/list={0}'
-	self.stock_timely_realtime_url_for_ths = 'http://d.10jqka.com.cn/v6/time/hs_{0}/today.js'               #code
-	self.stock_detail_url_for_ths = 'http://stockpage.10jqka.com.cn/{0}/'                   #code(stock.id[2:])
 	self.symbols = symbols
 	self.inc_persist = inc_persist
 	LogUtils.info('stock_day_inc_spider init finish...')

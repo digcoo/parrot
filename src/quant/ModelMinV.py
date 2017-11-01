@@ -50,7 +50,6 @@ class ModelMinV:
 #            is_hit = is_hit & (last1_max_daily_ma is not None and last1_stock_day.close > 0.99 * last1_max_daily_ma)           #昨日收盘价接近昨日日K线均线
 #            is_hit = is_hit & (last0_max_daily_ma is not None and realtime_stock_day.close > last0_max_daily_ma)           #当前价高于当日日K均线
 
-
 	    if is_hit:
 		return ('MinV-0',)
 

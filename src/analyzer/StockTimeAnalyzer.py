@@ -55,25 +55,16 @@ class StockTimeAnalyzer:
 
 
     #模型匹配
-    def match(self, realtime_stock_trades_map):		#model_tup:(symbol, day_times)
+    def match(self, realtime_stock_trades, realtime_stock_day):		#model_tup:(symbol, day_times)
 	match_model = None
 
 	try:
 
-	    symbol = realtime_stock_trades_map.get('symbol')
-#	    last_close = realtime_stock_trades_map.get('last_close')		#同花顺数据不稳定
-	    last1_stock_day = BaseStockUtils.pre_stock_day(self.data_container.hist_days[symbol], 1, self.todaystamp)
-	    last_close = last1_stock_day.close if last1_stock_day is not None else None
-	    today_stamp = realtime_stock_trades_map.get('today_stamp')
-
-	    today_times = realtime_stock_trades_map.get(symbol)
-	    realtime_stock_day = BaseStockUtils.compose_realtime_stock_day_from_time_trades(today_times, symbol=symbol, last_close=last_close, today_stamp=today_stamp)
-
 #	    match_model = self.add_match_model(match_model, self.model_time_ma.match(realtime_stock_trades_map))  #ModelTimeMA(TimeMA)
-	    match_model = self.add_match_model(match_model, self.model_time_30.match(realtime_stock_day, today_times))  #ModelTime30(Time30)
-#	    match_model = self.add_match_model(match_model, self.model_time_rise.match(realtime_stock_day, today_times))  #ModelTimeRise(TimeRise)
-	    match_model = self.add_match_model(match_model, self.model_time_min.match(realtime_stock_day, today_times))  #ModelTimeMin(TimeMin)
-	    match_model = self.add_match_model(match_model, self.model_time_v60.match(realtime_stock_day, today_times))  #ModelTimeV60(TimeV60)
+	    match_model = self.add_match_model(match_model, self.model_time_30.match(realtime_stock_day, realtime_stock_trades))  #ModelTime30(Time30)
+#	    match_model = self.add_match_model(match_model, self.model_time_rise.match(realtime_stock_day, realtime_stock_trades))  #ModelTimeRise(TimeRise)
+	    match_model = self.add_match_model(match_model, self.model_time_min.match(realtime_stock_day, realtime_stock_trades))  #ModelTimeMin(TimeMin)
+	    match_model = self.add_match_model(match_model, self.model_time_v60.match(realtime_stock_day, realtime_stock_trades))  #ModelTimeV60(TimeV60)
 
 
             match_model = self.add_match_model(match_model, self.stock_day_pack_matcher.match(realtime_stock_day))

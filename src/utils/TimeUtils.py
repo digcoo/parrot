@@ -36,10 +36,14 @@ class TimeUtils:
 	dt = time.localtime(datestamp)
         return time.strftime(format,dt)
 
-
     @staticmethod
     def timestring2timestamp(timestring):
         return int(time.mktime(time.strptime(timestring, "%Y-%m-%d %H:%M:%S")))
+
+    @staticmethod
+    def timestamp2datestamp(timestamp):
+	datestring = TimeUtils.timestamp2datestring(timestamp)
+	return TimeUtils.datestring2datestamp(datestring, '%Y-%m-%d')
 
     @staticmethod
     def get_current_timestamp():
