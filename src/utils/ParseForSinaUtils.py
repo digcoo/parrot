@@ -226,12 +226,15 @@ class ParseForSinaUtils:
     def compose_realtime_stock_trades(realtime_stock_times_map, realtime_stock_day):
 	if realtime_stock_day is not None and realtime_stock_day.vol > 0.1:
 	    date_str = TimeUtils.datestamp2datestring(realtime_stock_day.day, TimeUtils.DATE_FORMAT_YYYYMMDD)
+	    time0930_stamp = TimeUtils.datestring2datestamp(date_str + '0930', TimeUtils.TIME_FORMAT_YYYYMMDDHHMM)
 	    time1130_stamp = TimeUtils.datestring2datestamp(date_str + '1130', TimeUtils.TIME_FORMAT_YYYYMMDDHHMM)
 	    time1300_stamp = TimeUtils.datestring2datestamp(date_str + '1300', TimeUtils.TIME_FORMAT_YYYYMMDDHHMM)
 	    time1500_stamp = TimeUtils.datestring2datestamp(date_str + '1500', TimeUtils.TIME_FORMAT_YYYYMMDDHHMM)
 
 	    min_str = ''
-	    if realtime_stock_day.minute > time1130_stamp and realtime_stock_day.minute < time1300_stamp:
+	    if realtime_stock_day.minute < time0930_stamp:
+		min_str = date_str + '0930'
+	    elif realtime_stock_day.minute > time1130_stamp and realtime_stock_day.minute < time1300_stamp:
 		min_str = date_str + '1130'
 	    elif realtime_stock_day.minute > time1500_stamp:
 		min_str = date_str + '1500'
