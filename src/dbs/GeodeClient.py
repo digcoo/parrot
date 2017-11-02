@@ -1,7 +1,7 @@
 # encoding=utf8
 import os
 from gemfire.GemfireClient import *
-from utils.ParseUtil import *
+from utils.ParseForSinaUtils import *
 import jsonpickle
 
 from sys import path
@@ -64,7 +64,7 @@ class GeodeClient:
         start = (page -1) * size
         end = page*size if page * size < len(ids) else len(ids)
         temp_ids = ids[start : end]
-	ids_str = ParseUtil.parse_stock_ids(ids)
+	ids_str = ParseForSinaUtils.parse_stock_ids(ids)
 	temp_stocks = self.get(ids_str, 'stock')
         while(temp_stocks is not None and start < end):
 	    if len(temp_ids) > 1:
@@ -76,7 +76,7 @@ class GeodeClient:
             start = (page -1) * size
             end = page*size if page * size < len(ids) else len(ids)
             temp_ids = ids[start : end]
-	    ids_str = ParseUtil.parse_stock_ids(ids)
+	    ids_str = ParseForSinaUtils.parse_stock_ids(ids)
 	    temp_stocks = self.get(ids_str, 'stock')
 
 	return stocks	
@@ -208,7 +208,7 @@ class GeodeClient:
 
 
     def query_stock_time_trades_map_by_idlist(self, ids):
-	id_str = ParseUtil.parse_stock_ids(ids)
+	id_str = ParseForSinaUtils.parse_stock_ids(ids)
 	final_stocks_time_trades_map = {}
 	stocks_time_trades_map = self.get(id_str, 'stock-time-final')
 	if stocks_time_trades_map is not None:
@@ -229,7 +229,7 @@ class GeodeClient:
 	local_time_trades_map = stock_time_repo.get_region().get(symbol)
 	today_time_trades_map = {}
 	today_time_trades_map[str(day_datestamp)] = time_trades
-	com_stock_time_trades_map = ParseUtil.compose_stock_time_trades_map(local_time_trades_map, today_time_trades_map)
+	com_stock_time_trades_map = ParseForSinaUtils.compose_stock_time_trades_map(local_time_trades_map, today_time_trades_map)
 #	print jsonpickle.encode(com_stock_time_trades_map)
 	stock_time_repo.get_region().put(symbol, com_stock_time_trades_map)
 

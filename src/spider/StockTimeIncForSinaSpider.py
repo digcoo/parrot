@@ -38,13 +38,13 @@ class StockTimeIncForSinaSpider:
 #		LogUtils.info('=================================stock_time_inc_for_sina, symbol=%s, page=%s=======================================\n' % (temp_symbols, page))
 		stocks_day = SinaStockUtils.get_current_stock_days(temp_symbols)
 
+		tmp_fail_symbols = self.filter_fail_symbols(temp_symbols, stocks_day)
+		if tmp_fail_symbols is not None:
+		    fail_symbols.extend(tmp_fail_symbols)
+
 		for realtime_stock_day in stocks_day:
 		    realtime_time_stock_trades= ParseForSinaUtils.compose_realtime_stock_trades(self.realtime_stock_times_map, realtime_stock_day)
 		    self.realtime_stock_times_map[realtime_stock_day.symbol] = realtime_time_stock_trades
-
-		    if realtime_time_stock_trades is None:
-			fail_symbols.append(symbol)
-                    	continue
 
 		    date_stamp = TimeUtils.timestamp2datestamp(realtime_stock_day.day)
 
@@ -89,3 +89,14 @@ class StockTimeIncForSinaSpider:
             traceback.print_exc()
         return None
 
+
+    def filter_fail_symbols(self, source_symbols, collected_realtime_trades):
+	market_symbols = []
+	if collected_realtime_trades is not None and len(collected_realtime_trades) > 0:
+	    fail_symbols = []
+	    for realtime_stock_day in collected_realtime_trades:
+		market_symbols.append(realtime_stock_day.symbol)
+	    for source_symbol in source_symbols:
+		if source_symbol not in market_symbols:
+		    fail_symbols.append(source_symbol)
+	    return fail_symbols

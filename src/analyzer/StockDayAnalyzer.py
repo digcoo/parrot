@@ -3,7 +3,6 @@ import time
 import jsonpickle
 import traceback
 from vo.StockInfo import *
-from utils.ParseUtil import *
 from dbs.GeodeClient import *
 from utils.BaseStockUtils import *
 from utils.LogUtils import *

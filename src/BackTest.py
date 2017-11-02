@@ -13,6 +13,7 @@ import jsonpickle as json
 from GeodeClient import *
 from RedisClient import *
 from SinaStockUtils import *
+from ParseForSinaUtils import *
 from ThsStockUtils import *
 from IndicatorUtils import *
 
@@ -258,7 +259,7 @@ class BackTest:
 
 	hist_symbols_days[symbol] = latest_days
 
-	latest_times = ParseUtil.compose_stock_times_from_daytimes_map(latest_times)
+	latest_times = ParseForSinaUtils.compose_stock_times_from_daytimes_map(latest_times)
 #	print jsonpickle.encode(latest_times[symbol][0])
 
 #	print jsonpickle.encode(latest_times)

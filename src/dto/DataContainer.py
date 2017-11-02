@@ -2,7 +2,7 @@
 
 import traceback
 from utils.LogUtils import *
-from utils.ParseUtil import *
+from utils.ParseForSinaUtils import *
 from utils.SinaStockUtils import *
 from dbs.GeodeClient import *
 
@@ -80,7 +80,7 @@ class DataContainer:
             end = page * size if page * size < len(symbols) else len(symbols)
             temp_symbols = symbols[start : end]
 
-        allstocks_latest_times = ParseUtil.compose_stock_times_from_daytimes_map(allstocks_latest_times)
+        allstocks_latest_times = ParseForSinaUtils.compose_stock_times_from_daytimes_map(allstocks_latest_times)
 
         return allstocks_latest_times
 
@@ -92,19 +92,5 @@ class DataContainer:
 	
 	#获取当日开盘数据
 	current_stocks_day = SinaStockUtils.get_current_stock_days(symbols)
-	(suspend_stocks, market_stocks, re_market_stocks) = ParseUtil.compose_stocks_market(all_stocks, current_stocks_day)
-	return self.compose_symbols(suspend_stocks, market_stocks, re_market_stocks)
-
-    def compose_symbols(self, suspend_stocks, market_stocks, re_market_stocks):
-        suspend_symbols = []
-        market_symbols = []
-        re_market_symbols = []
-        for stock in suspend_stocks:
-            suspend_symbols.append(stock.id)
-
-        for stock in market_stocks:
-            market_symbols.append(stock.id)
-
-        for stock in re_market_stocks:
-            re_market_symbols.append(stock.id)
-        return suspend_symbols, market_symbols, re_market_symbols
+	(suspend_stocks, market_stocks, re_market_stocks) = ParseForSinaUtils.compose_stocks_market(all_stocks, current_stocks_day)
+	return ParseForSinaUtils.compose_symbols(suspend_stocks, market_stocks, re_market_stocks)

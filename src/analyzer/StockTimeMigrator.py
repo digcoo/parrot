@@ -21,9 +21,11 @@ class StockTimeMigrator:
 	start  = int(time.mktime(datetime.datetime.now().timetuple()))
 
 	self.identify = identify
+	self.stock_time_analyzer = None
 	try:
-	    stock_time_analyzer = StockTimeAnalyzer(symbols = symbols, todaystamp=todaystamp)
-	    self.stock_time_inc_spider = StockTimeIncForSinaSpider(stock_analyzer=stock_time_analyzer, symbols = symbols, inc_persist=False, hit_persist=True, identify = self.identify)
+	    self.stock_time_analyzer = StockTimeAnalyzer(symbols = symbols, todaystamp=todaystamp)
+	    market_symbols = self.stock_time_analyzer.data_container.market_symbols
+	    self.stock_time_inc_spider = StockTimeIncForSinaSpider(stock_analyzer=self.stock_time_analyzer, symbols = market_symbols, inc_persist=False, hit_persist=True, identify = self.identify)
 	except Exception, e:
 	    traceback.print_exc()
 

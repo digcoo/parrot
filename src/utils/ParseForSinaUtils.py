@@ -60,7 +60,7 @@ class ParseForSinaUtils:
 		stock.status = 'no_market'
             return stock
 	except Exception, e:
-	    LogUtils.info('[ParseUtils.compose_stock_day_info] stock_day no data, ' + line)
+	    LogUtils.info('[ParseForSinaUtils.compose_stock_day_info] stock_day no data, ' + line)
 #	    traceback.print_exc()
 	return None
 
@@ -120,7 +120,7 @@ class ParseForSinaUtils:
         re_market_stocks = []
         suspend_stocks = []
 
-	market_symbols = ParseUtil.compose_market_stock_symbols(current_stocks_day)
+	market_symbols = ParseForSinaUtils.compose_market_stock_symbols(current_stocks_day)
 
         for stock in all_stocks:
             if stock.id not in market_symbols:
@@ -168,7 +168,7 @@ class ParseForSinaUtils:
 	else:
 	    hist_time_trades_map[today_time_trades_map.keys()[0]] = today_time_trades_map.values()[0]
 	    day_stamps_uni = hist_time_trades_map.keys()
-	    day_stamps = ParseUtil.transfer_unicodes_ints(day_stamps_uni)
+	    day_stamps = ParseForSinaUtils.transfer_unicodes_ints(day_stamps_uni)
 	    day_stamps = sorted(day_stamps)
 	    day_stamps.reverse()
 	    latest_day_stamps = day_stamps[:min(remain_days, len(day_stamps))]
@@ -256,3 +256,19 @@ class ParseForSinaUtils:
 	    return realtime_stock_times
 
 	return None
+
+
+    @staticmethod
+    def compose_symbols(suspend_stocks, market_stocks, re_market_stocks):
+        suspend_symbols = []
+        market_symbols = []
+        re_market_symbols = []
+        for stock in suspend_stocks:
+            suspend_symbols.append(stock.id)
+
+        for stock in market_stocks:
+            market_symbols.append(stock.id)
+
+        for stock in re_market_stocks:
+            re_market_symbols.append(stock.id)
+        return suspend_symbols, market_symbols, re_market_symbols

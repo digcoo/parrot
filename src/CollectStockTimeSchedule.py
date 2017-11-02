@@ -46,7 +46,7 @@ process_pool = multiprocessing.Pool(processes=int(SystemConfig.get_instance().ge
 
 
 #股票日交易列表:每个交易日9点同步实时交易数据
-@scheduler.scheduled_job('cron', id='stock_time_realtime_spider', minute='*/1', hour='9-14', day_of_week='0-4', max_instances=1)
+@scheduler.scheduled_job('cron', id='stock_time_realtime_spider', minute='*/1', hour='9-23', day_of_week='0-4', max_instances=1)
 def stock_time_realtime_spider():
     try:
 
@@ -68,6 +68,7 @@ def stock_time_realtime_spider():
 	    symbols = GeodeClient.get_instance().query_all_stock_symbols()
 	    if not with_gem:
 	        symbols = CommonUtils.filter_symbols(symbols)[stub_start : stub_end]
+
 
 	    #初始化(分时)分析器
 	    global stock_time_migrators

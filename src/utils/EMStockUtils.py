@@ -4,7 +4,6 @@ import urllib2
 import traceback
 import jsonpickle
 
-from utils.ParseUtil import *
 from utils.HttpUtils import *
 from utils.ParseForEMUtils import *
 
