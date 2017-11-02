@@ -21,6 +21,9 @@ class ModelTimeMin:
     def match(self, realtime_stock_day, realtime_stock_times):
 	try:
 
+            if realtime_stock_day.symbol == 'sh603689':
+                LogUtils.info('\n\nModelTimeV60 realtime_stock_times : ' + jsonpickle.encode(realtime_stock_times) + '\n\n')
+
 	    if len(realtime_stock_times) < 2:
 		return None
 

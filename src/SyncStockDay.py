@@ -36,7 +36,7 @@ def stock_day_sync_task():
 	LogUtils.info('===============================stock_list_inc_spider end=============================================\n\n\n')
 
 
-
+	'''
 	LogUtils.info('===============================plate_list_inc_spider start=============================================')
 	start  = int(time.mktime(datetime.datetime.now().timetuple()))
 
@@ -58,7 +58,7 @@ def stock_day_sync_task():
 	end  = int(time.mktime(datetime.datetime.now().timetuple()))
 	LogUtils.info('rek_plate_stock_inc_spider take %s seconds' % (str(end - start), ))
 	LogUtils.info('===============================rel_plate_stock_inc_spider end=============================================\n\n\n')
-
+	'''
 
 
 
@@ -99,7 +99,7 @@ def stock_day_sync_task():
 	LogUtils.info('===============================stock_month_inc_spider end=============================================\n\n\n')
 
 
-
+	'''
 	LogUtils.info('===============================plate_day_inc_spider[week, month] start=============================================')
 	start  = int(time.mktime(datetime.datetime.now().timetuple()))
 
@@ -121,6 +121,7 @@ def stock_day_sync_task():
 	end  = int(time.mktime(datetime.datetime.now().timetuple()))
 	LogUtils.info('stock_time_inc_spider_for_ths take %s seconds' % (str(end - start), ))
 	LogUtils.info('===============================stock_time_inc_spider_from_ths end=============================================\n\n\n')
+	'''
 
     except Exception:
 	traceback.print_exc()
