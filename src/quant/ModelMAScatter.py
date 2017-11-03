@@ -42,7 +42,7 @@ class ModelMAScatter:
 	    is_hit = is_hit & (BaseStockUtils.diverge_ma_hybridity(over_mas, 0.02))	#日ma线互相偏离
 	    is_hit = is_hit & (realtime_stock_day.close > IndicatorUtils.Lowest_MA(hist_days, self.todaystamp))    		#昨日收盘价高于最低ma线
 	    is_hit = is_hit & (realtime_stock_day.close < IndicatorUtils.ALL_MA(hist_days, self.todaystamp))			#昨日收盘价低于最高ma线
-            is_hit = is_hit & (realtime_stock_day.close > last1_stock_day.op)
+            is_hit = is_hit & (realtime_stock_day.close > realtime_stock_day.op)
 
             if is_hit:
                 return ('MAScatter-0', )

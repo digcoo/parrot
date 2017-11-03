@@ -295,7 +295,7 @@ class BackTest:
 if __name__ == '__main__':
     base_test = BackTest()
 #    base_test.test_hit()
-    base_test.test_for_symbol_today_match('sh601231')
+    base_test.test_for_symbol_today_match('sh601086')
 #    base_test.test_for_week_ma_match('sz000058')
 #    base_test.test_for_month_ma_match('sz000633')
 #    base_test.test_for_time_ma_match('sz002227')

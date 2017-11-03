@@ -14,7 +14,6 @@ from quant.ModelBurst import *
 from quant.ModelMinV import *
 from quant.ModelLastBreak import *
 from quant.ModelReMarket import *
-from quant.ModelMVol import *
 from quant.ModelBase import *
 from quant.ModelDWMMA import *
 from quant.ModelCWMMA import *
@@ -46,7 +45,6 @@ class StockDayPackMatcher:
 	    self.model_min_v = ModelMinV(self.latest_days, self.todaystamp)
 	    self.model_burst = ModelBurst(self.latest_days, self.todaystamp)
 	    self.model_last_break = ModelLastBreak(self.latest_days, self.todaystamp)
-	    self.model_m_vol = ModelMVol(self.latest_days, self.todaystamp)
 	    self.model_cover = ModelCover(self.latest_days, self.todaystamp)
             self.model_re_market = ModelReMarket(self.latest_days, data_container, self.todaystamp)
 	    self.model_base = ModelBase(self.latest_days, self.latest_weeks, self.latest_months, self.todaystamp)
@@ -73,8 +71,7 @@ class StockDayPackMatcher:
 	    match_model = self.add_match_model(match_model, self.model_min_v.match(realtime_stock_day))  #ModelMinV(MinV)
 	    match_model = self.add_match_model(match_model, self.model_burst.match(realtime_stock_day))  #ModelBurst(Burst)
 	    match_model = self.add_match_model(match_model, self.model_last_break.match(realtime_stock_day))  #ModelLastBreak(LBreak)
-	    match_model = self.add_match_model(match_model, self.model_m_vol.match(realtime_stock_day))  #ModelMVol(MVol)
-#            match_model = self.add_match_model(match_model, self.model_re_market.match(realtime_stock_day))  #ModelReMarket(ReMark)
+            match_model = self.add_match_model(match_model, self.model_re_market.match(realtime_stock_day))  #ModelReMarket(ReMark)
 	    match_model = self.add_match_model(match_model, self.model_base.match(realtime_stock_day))  #ModelBase(Base)
             match_model = self.add_match_model(match_model, self.model_dwm_ma.match(realtime_stock_day))  #ModelDWMMA(DWM)
             match_model = self.add_match_model(match_model, self.model_cwm_ma.match(realtime_stock_day))  #ModelCWMMA(CWM)
