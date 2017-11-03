@@ -30,12 +30,12 @@ class ModelMAScatter:
 	    current_hist_days = BaseStockUtils.compose_realtime_stock_days(hist_days, realtime_stock_day)
 
 
-            last1_ma5 = IndicatorUtils.MA(hist_days, 5, self.todaystamp)
-            last1_ma10 = IndicatorUtils.MA(hist_days, 10, self.todaystamp)
-            last1_ma20 = IndicatorUtils.MA(hist_days, 20, self.todaystamp)
-            last1_ma30 = IndicatorUtils.MA(hist_days, 30, self.todaystamp)
+            last0_ma5 = IndicatorUtils.MA(current_hist_days, 5, self.todaystamp)
+            last0_ma10 = IndicatorUtils.MA(current_hist_days, 10, self.todaystamp)
+            last0_ma20 = IndicatorUtils.MA(current_hist_days, 20, self.todaystamp)
+            last0_ma30 = IndicatorUtils.MA(current_hist_days, 30, self.todaystamp)
 
-	    over_mas = [last1_ma5, last1_ma10, last1_ma20, last1_ma30]
+	    over_mas = [last0_ma5, last0_ma10, last0_ma20, last0_ma30]
 	    over_mas = list(filter(lambda x: x > realtime_stock_day, over_mas))		#上方阻力位
 
             is_hit = True
