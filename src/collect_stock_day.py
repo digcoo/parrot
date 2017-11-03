@@ -63,7 +63,7 @@ def stock_time_inc_start():
 if __name__ == '__main__':
     try:
 
-#        stock_list_inc_start()
+#	stock_list_inc_start()
 #	stock_day_inc_start()
 #	plate_list_inc_start()
 	stock_time_inc_start()

@@ -89,7 +89,6 @@ class StockTimeAnalyzer:
 
     def filter_common_indicate(self, realtime_stock_day, match_model):
         try:
-	    return True
 
             hist_weeks = self.latest_weeks[realtime_stock_day.symbol]
             hist_days = self.latest_days[realtime_stock_day.symbol]
@@ -133,7 +132,7 @@ class StockTimeAnalyzer:
 #            is_hit = is_hit & (is_last0_daily_over_pressure)
 
             #过滤开盘即涨停
-#            is_hit = is_hit & (realtime_stock_day.high > realtime_stock_day.low)
+            is_hit = is_hit & (realtime_stock_day.high > realtime_stock_day.low)
 
             #收红
 #            is_hit = is_hit & (realtime_stock_day.close > realtime_stock_day.op)
