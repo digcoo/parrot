@@ -90,9 +90,9 @@ class StockTimeAnalyzer:
     def filter_common_indicate(self, realtime_stock_day, match_model):
         try:
 
-            hist_weeks = self.latest_weeks[realtime_stock_day.symbol]
-            hist_days = self.latest_days[realtime_stock_day.symbol]
-            hist_months = self.latest_months[realtime_stock_day.symbol]
+            hist_weeks = self.data_container.hist_weeks[realtime_stock_day.symbol]
+            hist_days = self.data_container.hist_days[realtime_stock_day.symbol]
+            hist_months = self.data_container.hist_months[realtime_stock_day.symbol]
 
             last1_stock_day = BaseStockUtils.pre_stock_day(hist_days, 1, self.todaystamp)
             if last1_stock_day is None:
