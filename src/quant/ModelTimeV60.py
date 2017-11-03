@@ -21,7 +21,7 @@ class ModelTimeV60:
     def match(self, realtime_stock_day, realtime_stock_times):
 	try:
 
-            if TimeUtils.is_after('10:30:00'):
+            if TimeUtils.is_after('11:30:00'):
                 return None
 
 	    is_hit = True

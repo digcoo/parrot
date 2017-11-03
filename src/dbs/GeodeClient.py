@@ -2,6 +2,7 @@
 import os
 from gemfire.GemfireClient import *
 from utils.ParseForSinaUtils import *
+from utils.ThsStockUtils import *
 import jsonpickle
 
 from sys import path
@@ -64,7 +65,7 @@ class GeodeClient:
         start = (page -1) * size
         end = page*size if page * size < len(ids) else len(ids)
         temp_ids = ids[start : end]
-	ids_str = ParseForSinaUtils.parse_stock_ids(ids)
+	ids_str = ParseForSinaUtils.parse_stock_ids(temp_ids)
 	temp_stocks = self.get(ids_str, 'stock')
         while(temp_stocks is not None and start < end):
 	    if len(temp_ids) > 1:
@@ -76,7 +77,7 @@ class GeodeClient:
             start = (page -1) * size
             end = page*size if page * size < len(ids) else len(ids)
             temp_ids = ids[start : end]
-	    ids_str = ParseForSinaUtils.parse_stock_ids(ids)
+	    ids_str = ParseForSinaUtils.parse_stock_ids(temp_ids)
 	    temp_stocks = self.get(ids_str, 'stock')
 
 	return stocks	
@@ -409,34 +410,10 @@ if __name__ == '__main__':
 #	symbols.append(plate.symbol + '20171010')
 #    print jsonpickle.encode(symbols)
 
-    stock_times1 = ThsStockUtils.get_realtime_time_stock_trades('sh601101')
-    stock_times2 = ThsStockUtils.get_realtime_time_stock_trades('sz000633')
-    stock_times3 = ThsStockUtils.get_realtime_time_stock_trades('sh601555')
-    stock_times4 = ThsStockUtils.get_realtime_time_stock_trades('sh601996')
-    stock_times5 = ThsStockUtils.get_realtime_time_stock_trades('sh600250')
-    stock_times6 = ThsStockUtils.get_realtime_time_stock_trades('sh603111')
-    stock_times7 = ThsStockUtils.get_realtime_time_stock_trades('sz000998')
-    stock_times8 = ThsStockUtils.get_realtime_time_stock_trades('sz002427')
-    date_stamp1 = TimeUtils.get_current_datestamp()
-    date_stamp2 = TimeUtils.date_add(date_stamp1, 1)
-    date_stamp3 = TimeUtils.date_add(date_stamp2, 1)
-    date_stamp4 = TimeUtils.date_add(date_stamp3, 1)
-    date_stamp5 = TimeUtils.date_add(date_stamp4, 1)
-    date_stamp6 = TimeUtils.date_add(date_stamp5, 1)
-    date_stamp7 = TimeUtils.date_add(date_stamp6, 1)
-    date_stamp8 = TimeUtils.date_add(date_stamp7, 1)
 
-
-    stock_day_times_map = {}
-    stock_day_times_map[date_stamp1] = stock_times1
-    stock_day_times_map[date_stamp2] = stock_times2
-    stock_day_times_map[date_stamp3] = stock_times3
-    stock_day_times_map[date_stamp4] = stock_times4
-    stock_day_times_map[date_stamp5] = stock_times5
-    stock_day_times_map[date_stamp6] = stock_times6
-    stock_day_times_map[date_stamp7] = stock_times7
-    stock_day_times_map[date_stamp8] = stock_times8
-
+    all_symbols = GeodeClient.get_instance().query_all_stock_symbols()[:100]
+    stocks = GeodeClient.get_instance().query_stocks_by_ids(all_symbols)
+    print len(stocks)
 
 #    all_stock_day_map = {}
 #    all_stock_day_map['sh601101'] = stock_day_times_map

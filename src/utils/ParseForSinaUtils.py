@@ -113,7 +113,7 @@ class ParseForSinaUtils:
 	return None
 
 
-    '''	封装当日开始的股票列表	'''
+    '''	封装当日开盘的股票列表	'''
     @staticmethod
     def compose_stocks_market(all_stocks, current_stocks_day):
         market_stocks = []

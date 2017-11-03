@@ -19,7 +19,7 @@ class DataContainer:
 	self.re_market_symbols = []              #今日复盘的票
 	try:
 
-            self.hist_times = self.cache_hist_times(symbols)
+#            self.hist_times = self.cache_hist_times(symbols)
             self.hist_days = self.cache_hist_days(symbols)
             self.hist_weeks = self.cache_hist_weeks(symbols)
             self.hist_months = self.cache_hist_months(symbols)

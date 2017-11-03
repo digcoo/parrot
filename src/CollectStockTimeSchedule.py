@@ -69,12 +69,16 @@ def stock_time_realtime_spider():
 	    if not with_gem:
 	        symbols = CommonUtils.filter_symbols(symbols)[stub_start : stub_end]
 
+	    print str(stub_start) + ':' + str(stub_end)
 
 	    #初始化(分时)分析器
 	    global stock_time_migrators
 	    task_num = int((len(symbols) - 1) / num_of_symbol_per_task) + 1
 	    for index in range(task_num):
+		print 'task_process loop'
 	        task_symbols = symbols[index * num_of_symbol_per_task : min((index + 1) * num_of_symbol_per_task, len(symbols))]
+
+		print len(task_symbols)
 	        stock_time_migrator = StockTimeMigrator(symbols=task_symbols, todaystamp=todaystamp, identify='time-' + str(batch_no) + '-' + str(index))
 	        stock_time_migrators.append(stock_time_migrator)
 

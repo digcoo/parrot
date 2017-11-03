@@ -38,6 +38,8 @@ class RedisClient:
 	local_rec_stocks_map = eval(local_rec_stocks_str) if local_rec_stocks_str is not None else None
 	if local_rec_stocks_map is None:
 	    local_rec_stocks_map = {}
+
+	print type + ':' + str(len(stocks))
 	
 	if type == 'day':
 	    self.client.set('day', stocks)

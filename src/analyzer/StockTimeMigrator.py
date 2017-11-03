@@ -25,6 +25,7 @@ class StockTimeMigrator:
 	try:
 	    self.stock_time_analyzer = StockTimeAnalyzer(symbols = symbols, todaystamp=todaystamp)
 	    market_symbols = self.stock_time_analyzer.data_container.market_symbols
+	    print'StockTimeMigrator market_symbols = ' +  str(len(market_symbols))
 	    self.stock_time_inc_spider = StockTimeIncForSinaSpider(stock_analyzer=self.stock_time_analyzer, symbols = market_symbols, inc_persist=False, hit_persist=True, identify = self.identify)
 	except Exception, e:
 	    traceback.print_exc()
