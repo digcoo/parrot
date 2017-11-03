@@ -29,14 +29,16 @@ class EMStockUtils:
         return None, None, None
 
     @staticmethod
-    def get_html(url, stock):
+    def get_html(url):
         try:
             headers = {}
+	    headers['User-Agent'] = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36'
+	    headers['Host'] = 'data.eastmoney.com'
             ntries = 100
             loop = 0
             while loop < ntries:
                 loop += 1
-                content = HttpUtils.get(url, headers, 'utf-8')
+                content = HttpUtils.get(url, headers, 'gbk')
                 if content is not None:
                     return content
 

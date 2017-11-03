@@ -11,7 +11,8 @@ from spider.PlateListIncForThsSpider import *
 from spider.StockTimeIncSpider import *
 from spider.StockTimeIncForEMSpider import *
 from spider.StockTimeIncForSinaSpider import *
-
+from spider.BusinessListIncSpider import *
+from spider.BusinessDayIncSpider import *
 
 def stock_list_inc_start():
     try:
@@ -59,6 +60,18 @@ def stock_time_inc_start():
 
 
 
+def business_day_inc_start():
+    try:
+
+        business_list_spider = BusinessListIncSpider()
+        business_list = business_list_spider.get_business_list()
+	
+	business_day_spider  = BusinessDayIncSpider()
+	business_day_spider.get_business_days([business_info.id for business_info in business_list])
+
+    except Exception, e:
+        traceback.print_exc()
+
 
 if __name__ == '__main__':
     try:
@@ -66,7 +79,8 @@ if __name__ == '__main__':
 #	stock_list_inc_start()
 #	stock_day_inc_start()
 #	plate_list_inc_start()
-	stock_time_inc_start()
+#	stock_time_inc_start()
+	business_day_inc_start()
 
     except Exception, e:
         traceback.print_exc()

@@ -16,7 +16,7 @@ class HttpUtils:
             buf = response.read()
 	    return buf.decode(charset)
         except Exception, e:
-#	    traceback.print_exc()
+	    traceback.print_exc()
 	    if hasattr(e, 'code'):
 		LogUtils.info('get url = %s, return_code=%s, reason = %s' % (url, e.code, e.reason))
 		if e.code == 404:

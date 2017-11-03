@@ -4,12 +4,9 @@ import time
 import datetime
 import traceback
 import json
-from vo.PlateInfo import *
-from vo.PlateDayInfo import *
-from vo.RelPlateStockInfo import *
-from vo.StockInfo import *
-from vo.StockDayInfo import *
 from vo.StockTimeInfo import *
+from vo.BusinessInfo import *
+from vo.BusinessDayInfo import *
 from utils.LogUtils import *
 
 from bs4 import BeautifulSoup
@@ -60,3 +57,56 @@ class ParseForEMUtils:
         return None, None, None
 
 
+#///////////////////////////////////////////stock for EM///////////////////////////////////////////////////////////
+
+
+
+#///////////////////////////////////////////business for EM///////////////////////////////////////////////////////////
+
+    @staticmethod
+    def parse_business_list(json_data):
+	try:
+	    if json_data is not None and len(json_data) > 0:
+		json_list = jsonpickle.decode(json_data).get('data')
+		business_list = []
+		for json_obj in json_list:
+		    business_info = BusinessInfo()
+		    business_info.id = json_obj.get('SalesCode')
+		    business_info.name = json_obj.get('SalesName')
+		    business_list.append(business_info)
+		return business_list if len(business_list) > 0 else None
+	except Exception, e:
+	    traceback.print_exc()
+	return None
+
+
+#///////////////////////////////////////////business for EM///////////////////////////////////////////////////////////
+
+
+#///////////////////////////////////////////business-day for EM///////////////////////////////////////////////////////////
+
+
+
+#///////////////////////////////////////////business-day for EM///////////////////////////////////////////////////////////
+
+    @staticmethod
+    def parse_business_days(json_data):
+        try:
+            if json_data is not None and len(json_data) > 0:
+                json_list = jsonpickle.decode(json_data).get('data')
+                business_days = []
+                for json_obj in json_list:
+                    business_day = BusinessDayInfo()
+                    business_day.b_symbol = json_obj.get('SalesCode')
+                    business_day.b_name = json_obj.get('SalesName')
+		    business_day.s_symbol = 'sh' + json_obj.get('SCode') if json_obj.get('SCode').startswith('6') else 'sz' + json_obj.get('SCode')
+		    business_day.s_name = json_obj.get('SName')
+		    business_day.day = TimeUtils.datestring2timestamp(json_obj.get('TDate'))
+		    business_day.sell_money = float(json_obj.get('ActSellNum')) if len(json_obj.get('ActSellNum')) > 2 else None
+		    business_day.buy_money = float(json_obj.get('ActBuyNum')) if len(json_obj.get('ActBuyNum')) > 2 else None
+		    business_day.id = business_day.b_symbol + business_day.s_symbol + json_obj.get('TDate').replace('-', '')
+                    business_days.append(business_day)
+                return business_days if len(business_days) > 0 else None
+        except Exception, e:
+            traceback.print_exc()
+        return None
