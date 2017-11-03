@@ -43,6 +43,7 @@ class ModelMAScatter:
 	    is_hit = is_hit & (realtime_stock_day.close > IndicatorUtils.Lowest_MA(hist_days, self.todaystamp))    		#昨日收盘价高于最低ma线
 	    is_hit = is_hit & (realtime_stock_day.close < IndicatorUtils.ALL_MA(hist_days, self.todaystamp))			#昨日收盘价低于最高ma线
             is_hit = is_hit & (realtime_stock_day.close > realtime_stock_day.op)
+	    is_hit = is_hit & (realtime_stock_day.money/realtime_stock_day.vol > realtime_stock_day.last_close)
 
             if is_hit:
                 return ('MAScatter-0', )
