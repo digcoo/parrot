@@ -9,6 +9,7 @@ from spider.StockTimeIncSpider import *
 from spider.StockTimeIncForEMSpider import *
 from spider.StockTimeIncForSinaSpider import *
 from utils.LogUtils import *
+from utils.SystemConfig import *
 
 class StockTimeMigrator:
 
@@ -22,11 +23,13 @@ class StockTimeMigrator:
 
 	self.identify = identify
 	self.stock_time_analyzer = None
+	self.stock_time_inc_spider = None
 	try:
 	    self.stock_time_analyzer = StockTimeAnalyzer(symbols = symbols, todaystamp=todaystamp)
 	    market_symbols = self.stock_time_analyzer.data_container.market_symbols
-	    print'StockTimeMigrator market_symbols = ' +  str(len(market_symbols))
-	    self.stock_time_inc_spider = StockTimeIncForSinaSpider(stock_analyzer=self.stock_time_analyzer, symbols = market_symbols, inc_persist=False, hit_persist=True, identify = self.identify)
+	    inc_persist = str(True) == SystemConfig.get_instance().get(SystemConfig.PROJECT_SYMBOL, SystemConfig.SPIDER_INC_PERSIST)
+	    hit_persist = str(True) == SystemConfig.get_instance().get(SystemConfig.PROJECT_SYMBOL, SystemConfig.SPIDER_HIT_PERSIST)
+	    self.stock_time_inc_spider = StockTimeIncForSinaSpider(stock_analyzer=self.stock_time_analyzer, symbols = market_symbols, inc_persist=inc_persist, hit_persist=hit_persist, identify = self.identify)
 	except Exception, e:
 	    traceback.print_exc()
 

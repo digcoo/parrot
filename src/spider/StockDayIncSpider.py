@@ -5,7 +5,7 @@ import jsonpickle as json
 import traceback
 from utils.HttpUtils import *
 from vo.StockInfo import *
-from utils.ParseUtil import *
+from utils.ParseForSinaUtils import *
 from utils.ParseForThsUtils import *
 from dbs.GeodeClient import *
 from utils.CommonUtils import *
@@ -24,7 +24,7 @@ class StockDayIncSpider:
         try:
 	    url = self.stock_single_url.format(symbols)
 	    content = self.get_html(url)
-	    return ParseUtil.parse_stock_day(content)
+	    return ParseForSinaUtils.parse_stock_day(content)
         except Exception, e:
             traceback.print_exc()
         return None

@@ -25,6 +25,10 @@ class SystemConfig:
     SPIDER_SYMBOL_NUM_PER_PROCESSOR = 'spider.symbol.num.per.processor'
     SPIDER_BATCH_NO = 'spider.batch.no'
     SPIDER_PROCESSOR_NUM = 'spider.processor.num'
+
+    #persit
+    SPIDER_INC_PERSIST = 'spider.inc.persit'
+    SPIDER_HIT_PERSIST = 'spider.hit.persist'
     
 
     __instance = None

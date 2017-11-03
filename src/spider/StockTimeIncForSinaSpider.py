@@ -43,7 +43,7 @@ class StockTimeIncForSinaSpider:
 		    fail_symbols.extend(tmp_fail_symbols)
 
 		for realtime_stock_day in stocks_day:
-		    realtime_time_stock_trades= ParseForSinaUtils.compose_realtime_stock_trades(self.realtime_stock_times_map, realtime_stock_day)
+		    realtime_time_stock_trades = ParseForSinaUtils.compose_realtime_stock_trades(self.realtime_stock_times_map, realtime_stock_day)
 		    self.realtime_stock_times_map[realtime_stock_day.symbol] = realtime_time_stock_trades
 
 		    date_stamp = TimeUtils.timestamp2datestamp(realtime_stock_day.day)
@@ -77,7 +77,6 @@ class StockTimeIncForSinaSpider:
         LogUtils.info('stock time recommend stock cnt = ' + str(len(hit_list)))
 
         LogUtils.info('stock_time_inc_for_sina, fail_symbols_size = ' + str(len(fail_symbols)) + ', fail_symbols = ' + jsonpickle.encode(fail_symbols) + '\n')
-
 
 
 

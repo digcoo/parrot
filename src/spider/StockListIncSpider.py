@@ -5,7 +5,7 @@ import urllib2
 import demjson as json
 import traceback
 
-from utils.ParseUtil import *
+from utils.ParseForSinaUtils import *
 from utils.SinaStockUtils import *
 from vo.StockInfo import *
 from dbs.GeodeClient import *
@@ -66,11 +66,11 @@ class StockListIncSpider:
 	try:
 	    com_stocks = []
 	    all_stocks = GeodeClient.get_instance().query_all_stocks()
-	    all_symbols = ParseUtil.parse_stock_symbol_list(all_stocks)
+	    all_symbols = ParseForSinaUtils.parse_stock_symbol_list(all_stocks)
 	    '''获取当天数据'''
 	    current_stocks_day = SinaStockUtils.get_current_stock_days(all_symbols)
 	    '''组合当天交易股票(suspend_stocks, market_stocks, re_market_stocks)'''
-	    (suspend_stocks, market_stocks, re_market_stocks) = ParseUtil.compose_stocks_market(all_stocks, current_stocks_day)
+	    (suspend_stocks, market_stocks, re_market_stocks) = ParseForSinaUtils.compose_stocks_market(all_stocks, current_stocks_day)
 	    com_stocks.extend(suspend_stocks)
 	    com_stocks.extend(market_stocks)
 	    GeodeClient.get_instance().add_batch_stocks(com_stocks)
