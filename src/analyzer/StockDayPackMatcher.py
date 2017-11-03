@@ -93,7 +93,7 @@ class StockDayPackMatcher:
         try:
 
 	    #忽略
-	    if match_model.find('ReMark-') > -1 or match_model.find('Upper-') > -1 or match_model.find('Cover-') > -1:
+	    if match_model.find('ReMark-') > -1 or match_model.find('Upper-') > -1 or match_model.find('Cover-') > -1  or match_model.find('MAScatter-') > -1 :
 		return True
 
             hist_weeks = self.latest_weeks[realtime_stock_day.symbol]
