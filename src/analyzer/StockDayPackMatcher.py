@@ -19,6 +19,7 @@ from quant.ModelBase import *
 from quant.ModelDWMMA import *
 from quant.ModelCWMMA import *
 from quant.ModelCLWMMA import *
+from quant.ModelMAScatter import *
 
 class StockDayPackMatcher:
 
@@ -41,6 +42,7 @@ class StockDayPackMatcher:
 	    start  = int(time.mktime(datetime.datetime.now().timetuple()))
 
 	    self.model_upper = ModelUpper(self.latest_days, self.todaystamp)
+	    self.model_ma_scatter = ModelMAScatter(self.latest_days, self.todaystamp)
 	    self.model_min_v = ModelMinV(self.latest_days, self.todaystamp)
 	    self.model_burst = ModelBurst(self.latest_days, self.todaystamp)
 	    self.model_last_break = ModelLastBreak(self.latest_days, self.todaystamp)
@@ -66,6 +68,7 @@ class StockDayPackMatcher:
 	match_model = None
 	try:
 	    match_model = self.add_match_model(match_model, self.model_upper.match(realtime_stock_day))	#ModelUpper(Upper)
+	    match_model = self.add_match_model(match_model, self.model_ma_scatter.match(realtime_stock_day)) #ModelMAScatter(MAScatter)
             match_model = self.add_match_model(match_model, self.model_cover.match(realtime_stock_day))  #ModelCover(Cover)
 	    match_model = self.add_match_model(match_model, self.model_min_v.match(realtime_stock_day))  #ModelMinV(MinV)
 	    match_model = self.add_match_model(match_model, self.model_burst.match(realtime_stock_day))  #ModelBurst(Burst)

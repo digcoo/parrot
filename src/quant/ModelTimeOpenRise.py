@@ -11,7 +11,7 @@ import jsonpickle
 开盘拉升
 
 '''
-class ModelOpenRise:
+class ModelTimeOpenRise:
 
     def __init__(self, hist_days, hist_times, todaystamp):
 	self.todaystamp = todaystamp

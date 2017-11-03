@@ -279,11 +279,12 @@ class BaseStockUtils:
 
     #均线黏合度
     @staticmethod
-    def ma_hybridity(stock_days, realtime_stock_day):
-	ma5 = IndicatorUtils.MA(stock_days, 5, realtime_stock_day)
-	ma10 = IndicatorUtils.MA(stock_days, 10, realtime_stock_day)
-	ma20 = IndicatorUtils.MA(stock_days, 20, realtime_stock_day)
-	ma30 = IndicatorUtils.MA(stock_days, 30, realtime_stock_day)
+    def diverge_ma_hybridity(mas, rate):
+	for i in range(len(mas)):
+	    for j in range(i + 1, len(mas)):
+		if abs(mas[i] - mas[j]) / mas[j] < rate:
+		    return False
+	return True
 
     #封装当天交易分时数据(将历史交易数据与当天交易数据合并)
     @staticmethod

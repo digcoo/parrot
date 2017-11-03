@@ -28,6 +28,7 @@ from ModelGreenT import *
 from ModelOpen import *
 from ModelCloseT import *
 from ModelBurst import *
+from ModelMAScatter import *
 from ModelCloseSRedHead import *
 from ModelCloseBRedHead import *
 from StockIncubator import *
@@ -188,7 +189,7 @@ class BackTest:
 
         hist_symbols_days[symbol] = latest_days
 
-        model_test = ModelCover(hist_symbols_days, stock_today.day)
+        model_test = ModelMAScatter(hist_symbols_days, stock_today.day)
 
         print model_test.match(stock_today)
 
@@ -294,11 +295,11 @@ class BackTest:
 if __name__ == '__main__':
     base_test = BackTest()
 #    base_test.test_hit()
-#    base_test.test_for_symbol_today_match('sh600569')
+    base_test.test_for_symbol_today_match('sh601231')
 #    base_test.test_for_week_ma_match('sz000058')
 #    base_test.test_for_month_ma_match('sz000633')
 #    base_test.test_for_time_ma_match('sz002227')
-    base_test.test_for_spider('sh600835')
+#    base_test.test_for_spider('sh600835')
 
 #    base_test.import_stocks_days()
 #    base_test.latest_resistance_price('sz000008')

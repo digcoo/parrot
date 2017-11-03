@@ -74,6 +74,35 @@ class IndicatorUtils:
 	    traceback.print_exc()
 	return None
 
+
+    #日线最低MA
+    @staticmethod
+    def Lowest_MA(hist_days, todaystamp):
+        try:
+	    mas = []
+
+            MA5 = IndicatorUtils.MA(hist_days, 5, todaystamp)
+	    if MA5 is not None:
+		 mas.append(MA5)
+
+            MA10 = IndicatorUtils.MA(hist_days, 10, todaystamp)
+            if MA10 is not None:
+                 mas.append(MA10)
+
+            MA20 = IndicatorUtils.MA(hist_days, 20, todaystamp)
+            if MA20 is not None:
+                 mas.append(MA20)
+
+            MA30 = IndicatorUtils.MA(hist_days, 30, todaystamp)
+            if MA30 is not None:
+                 mas.append(MA30)
+
+            return min(mas)
+        except Exception, e:
+            traceback.print_exc()
+        return None
+
+
     #EMA(X，4)=［2*X4+(4-1)*Y’］/(4+1)
     @staticmethod
     def EMA(hist_days, ndays, todaystamp):

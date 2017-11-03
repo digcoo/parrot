@@ -15,7 +15,7 @@ from quant.ModelTime30 import *
 from quant.ModelTimeRise import *
 from quant.ModelTimeMin import *
 from quant.ModelTimeV60 import *
-from quant.ModelOpenRise import *
+from quant.ModelTimeOpenRise import *
 
 from StockDayPackMatcher import *
 
@@ -42,7 +42,7 @@ class StockTimeAnalyzer:
 	    self.model_time_rise = ModelTimeRise(self.data_container.hist_days, self.data_container.hist_times, self.todaystamp)
 	    self.model_time_min = ModelTimeMin(self.data_container.hist_days, self.data_container.hist_times, self.todaystamp)
 	    self.model_time_v60 = ModelTimeV60(self.data_container.hist_days, self.data_container.hist_times, self.todaystamp)
-	    self.model_open_rise = ModelOpenRise(self.data_container.hist_days, self.data_container.hist_times, self.todaystamp)
+	    self.model_time_open_rise = ModelTimeOpenRise(self.data_container.hist_days, self.data_container.hist_times, self.todaystamp)
 
 	    self.stock_day_pack_matcher = StockDayPackMatcher(symbols, todaystamp, self.data_container)
 
@@ -66,7 +66,7 @@ class StockTimeAnalyzer:
 #	    match_model = self.add_match_model(match_model, self.model_time_rise.match(realtime_stock_day, realtime_stock_trades))  #ModelTimeRise(TimeRise)
 	    match_model = self.add_match_model(match_model, self.model_time_min.match(realtime_stock_day, realtime_stock_trades))  #ModelTimeMin(TimeMin)
 	    match_model = self.add_match_model(match_model, self.model_time_v60.match(realtime_stock_day, realtime_stock_trades))  #ModelTimeV60(TimeV60)
-	    match_model = self.add_match_model(match_model, self.model_open_rise.match(realtime_stock_day, realtime_stock_trades))  #ModelOpenRise(OpenRise)
+	    match_model = self.add_match_model(match_model, self.model_time_open_rise.match(realtime_stock_day, realtime_stock_trades))  #ModelTimeOpenRise(OpenRise)
 
 
             match_model = self.add_match_model(match_model, self.stock_day_pack_matcher.match(realtime_stock_day))
