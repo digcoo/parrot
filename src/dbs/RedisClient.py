@@ -39,8 +39,6 @@ class RedisClient:
 	if local_rec_stocks_map is None:
 	    local_rec_stocks_map = {}
 
-	print type + ':' + str(len(stocks))
-	
 	if type == 'day':
 	    self.client.set('day', stocks)
 #	    local_rec_stocks_map[self.key_day] = stocks
