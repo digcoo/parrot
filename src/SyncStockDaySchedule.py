@@ -15,6 +15,8 @@ from spider.StockTimeIncSpider import *
 import time
 from utils.LogUtils import *
 from utils.SinaStockUtils import *
+from spider.BusinessListIncSpider import *
+from spider.BusinessDayIncSpider import *
 
 scheduler = BlockingScheduler()
 
@@ -104,7 +106,32 @@ def stock_day_inc_spider():
 	LogUtils.info('===============================stock_month_inc_spider end=============================================\n\n\n')
 
 
+        LogUtils.info('===============================business_list_inc_spider start=============================================')
+        start  = int(time.mktime(datetime.datetime.now().timetuple()))
 
+        business_list_inc_spider = BusinessListIncSpider()
+        business_list_inc_spider.get_business_list()
+
+        end  = int(time.mktime(datetime.datetime.now().timetuple()))
+        LogUtils.info('business_list_inc_spider take %s seconds' % (str(end - start), ))
+        LogUtils.info('===============================business_list_inc_spider end=============================================\n\n\n')
+
+
+
+
+        LogUtils.info('===============================business_day_inc_spider start=============================================')
+        start  = int(time.mktime(datetime.datetime.now().timetuple()))
+
+        business_list = MysqlClient.get_instance().query_all_business_list()
+        business_day_inc_spider = BusinessDayIncSpider()
+        business_day_inc_spider.get_latest_business_days([business['id'] for business in business_list])
+
+        end  = int(time.mktime(datetime.datetime.now().timetuple()))
+        LogUtils.info('business_list_inc_spider take %s seconds' % (str(end - start), ))
+        LogUtils.info('===============================business_list_inc_spider end=============================================\n\n\n')
+
+
+	'''
 	LogUtils.info('===============================plate_day_inc_spider[week, month] start=============================================')
 	start  = int(time.mktime(datetime.datetime.now().timetuple()))
 
@@ -126,6 +153,7 @@ def stock_day_inc_spider():
 	end  = int(time.mktime(datetime.datetime.now().timetuple()))
 	LogUtils.info('stock_time_inc_spider_for_ths take %s seconds' % (str(end - start), ))
 	LogUtils.info('===============================stock_time_inc_spider_from_ths end=============================================\n\n\n')
+	'''
 
     except Exception:
 	traceback.print_exc()

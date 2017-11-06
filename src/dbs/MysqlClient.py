@@ -226,6 +226,17 @@ class MysqlClient:
 
 #//////////////////////////////////////////////////////////////////business/////////////////////////////////////////////////////////////////////////
 
+    def query_all_business_list(self):
+        try:
+            self.conn()
+            with self.connection.cursor() as cursor:
+                sql = "SELECT `id`, `name` from `business`"
+                cursor.execute(sql)
+                return cursor.fetchall()
+        except Exception, e:
+            traceback.print_exc()
+        return None
+
     def query_business_list_by_ids(self, ids):
         try:
             id_str = StringUtils.parse_list_to_idstr(ids)
