@@ -62,7 +62,7 @@ class StockTimeAnalyzer:
 	try:
 
 #	    match_model = self.add_match_model(match_model, self.model_time_ma.match(realtime_stock_trades_map))  #ModelTimeMA(TimeMA)
-	    match_model = self.add_match_model(match_model, self.model_time_30.match(realtime_stock_day, realtime_stock_trades))  #ModelTime30(Time30)
+#	    match_model = self.add_match_model(match_model, self.model_time_30.match(realtime_stock_day, realtime_stock_trades))  #ModelTime30(Time30)
 #	    match_model = self.add_match_model(match_model, self.model_time_rise.match(realtime_stock_day, realtime_stock_trades))  #ModelTimeRise(TimeRise)
 	    match_model = self.add_match_model(match_model, self.model_time_min.match(realtime_stock_day, realtime_stock_trades))  #ModelTimeMin(TimeMin)
 	    match_model = self.add_match_model(match_model, self.model_time_v60.match(realtime_stock_day, realtime_stock_trades))  #ModelTimeV60(TimeV60)
@@ -135,7 +135,7 @@ class StockTimeAnalyzer:
             is_hit = is_hit & (realtime_stock_day.high > realtime_stock_day.low)
 
 	    #高于最低日MA线
-	    is_hit = is_hit & (realtime_stock_day.close > IndicatorUtils.Lowest_MA(current_hist_days, self.todaystamp))                 #昨日收盘价高于最低ma线
+#	    is_hit = is_hit & (realtime_stock_day.close > IndicatorUtils.Lowest_MA(current_hist_days, self.todaystamp))                 #昨日收盘价高于最低ma线
 
             #收红
 #            is_hit = is_hit & (realtime_stock_day.close > realtime_stock_day.op)

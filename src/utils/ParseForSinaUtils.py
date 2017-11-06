@@ -240,7 +240,7 @@ class ParseForSinaUtils:
 		min_str = date_str + '1500'
 	    else:
 		min_str = TimeUtils.datestamp2datestring(realtime_stock_day.minute, TimeUtils.TIME_FORMAT_YYYYMMDDHHMM)
-	    print min_str
+	    
 	    realtime_stock_day.id = realtime_stock_day.symbol + min_str
 	    realtime_stock_day.day = TimeUtils.datestring2datestamp(min_str, TimeUtils.TIME_FORMAT_YYYYMMDDHHMM)
 
@@ -251,8 +251,10 @@ class ParseForSinaUtils:
 		last_realtime_stock_time = realtime_stock_times[len(realtime_stock_times) - 1]	#将当前数据覆盖当前分钟的分时数据
 		if last_realtime_stock_time.day == realtime_stock_day.day:
 		    realtime_stock_times[len(realtime_stock_times) - 1] = realtime_stock_day
+		    print 'set1 = ' + jsonpickle.encode(realtime_stock_day)
 		else:
 		    realtime_stock_times.append(realtime_stock_day)
+		    print 'set2 = ' + jsonpickle.encode(realtime_stock_day)
 	    return realtime_stock_times
 
 	return None

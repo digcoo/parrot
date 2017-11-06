@@ -3,6 +3,7 @@ from vo.StockDayInfo import *
 from vo.StockTimeInfo import *
 from utils.TimeUtils import *
 import time
+import copy
 import jsonpickle
 import traceback
 
@@ -344,7 +345,7 @@ class BaseStockUtils:
 		last_period_day.vol = last_period_day.vol + realtime_stock_day.vol
 		
 	    else:										#本周不存在记录
-	    	last_period_day = realtime_stock_day
+	    	last_period_day = copy.copy(realtime_stock_day)
 		last_period_day.id = realtime_stock_day.symbol + TimeUtils.timestamp2datestring(TimeUtils.current_friday_from_datestamp(realtime_stock_day.day))
 		current_hist_weeks.insert(0, last_period_day)
 	return current_hist_weeks
@@ -365,7 +366,7 @@ class BaseStockUtils:
                 last_period_day.money = last_period_day.money + realtime_stock_day.money
                 last_period_day.vol = last_period_day.vol + realtime_stock_day.vol
             else:                                                                               #本周不存在记录
-                last_period_day = realtime_stock_day
+                last_period_day = copy.copy(realtime_stock_day)
                 last_period_day.id = realtime_stock_day.symbol + TimeUtils.timestamp2datestring(TimeUtils.lastday_of_month_from_datestamp(realtime_stock_day.day))
                 current_hist_months.insert(0, last_period_day)
         return current_hist_months

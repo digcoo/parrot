@@ -58,7 +58,7 @@ class StockTimeIncForSinaSpider:
 		    #日线数据持久存储
 		    if self.inc_persist:
  			GeodeClient.get_instance().put_stock_time_trades(symbol, date_stamp, realtime_time_stock_trades)
-		
+
 		page += 1
                 start = (page -1) * size
                 end = page*size if page * size < len(self.symbols) else len(self.symbols)

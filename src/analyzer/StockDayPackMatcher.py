@@ -74,8 +74,8 @@ class StockDayPackMatcher:
 	    match_model = self.add_match_model(match_model, self.model_last_break.match(realtime_stock_day))  #ModelLastBreak(LBreak)
             match_model = self.add_match_model(match_model, self.model_re_market.match(realtime_stock_day))  #ModelReMarket(ReMark)
 	    match_model = self.add_match_model(match_model, self.model_base.match(realtime_stock_day))  #ModelBase(Base)
-            match_model = self.add_match_model(match_model, self.model_dwm_ma.match(realtime_stock_day))  #ModelDWMMA(DWM)
-            match_model = self.add_match_model(match_model, self.model_cwm_ma.match(realtime_stock_day))  #ModelCWMMA(CWM)
+	    match_model = self.add_match_model(match_model, self.model_dwm_ma.match(realtime_stock_day))  #ModelDWMMA(DWM)
+	    match_model = self.add_match_model(match_model, self.model_cwm_ma.match(realtime_stock_day))  #ModelCWMMA(CWM)
 	    match_model = self.add_match_model(match_model, self.model_clwm_ma.match(realtime_stock_day))  #ModelCLWMMA(CLWM)
 
             if match_model is not None and self.filter_common_indicate(realtime_stock_day, match_model[0]):
@@ -105,7 +105,7 @@ class StockDayPackMatcher:
             current_hist_days = BaseStockUtils.compose_realtime_stock_days(hist_days, realtime_stock_day)
 	    current_hist_weeks = BaseStockUtils.compose_realtime_stock_weeks(hist_weeks, realtime_stock_day)
 	    current_hist_months = BaseStockUtils.compose_realtime_stock_months(hist_months, realtime_stock_day)
-	
+
 	    last1_above_pressure_month_ma = IndicatorUtils.above_pressure_ma_tup(hist_months, self.todaystamp, realtime_stock_day.close)          #上月K线阻力位
 	    last0_above_pressure_month_ma = IndicatorUtils.above_pressure_ma_tup(hist_months, TimeUtils.date_add(TimeUtils.lastday_of_month_from_datestamp(self.todaystamp), 1), realtime_stock_day.close)        #本月K线阻力位
 	    last1_above_pressure_week_ma = IndicatorUtils.above_pressure_ma_tup(hist_weeks, self.todaystamp, realtime_stock_day.close)        #上周K线阻力位
@@ -132,7 +132,7 @@ class StockDayPackMatcher:
 	    is_hit = is_hit & (realtime_stock_day.high > realtime_stock_day.low)
 
             #高于最低日MA线
-            is_hit = is_hit & (realtime_stock_day.close > IndicatorUtils.Lowest_MA(current_hist_days, self.todaystamp))                 #昨日收盘价高于最低ma线
+#            is_hit = is_hit & (realtime_stock_day.close > IndicatorUtils.Lowest_MA(current_hist_days, self.todaystamp))                 #昨日收盘价高于最低ma线
 
 	    #收红
 	    is_hit = is_hit & (realtime_stock_day.close > realtime_stock_day.op)
