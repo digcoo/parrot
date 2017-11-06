@@ -224,3 +224,84 @@ class MysqlClient:
 #//////////////////////////////////////////////////////////////////rel_plate_stock/////////////////////////////////////////////////////////////////////////
 
 
+#//////////////////////////////////////////////////////////////////business/////////////////////////////////////////////////////////////////////////
+
+    def query_business_list_by_ids(self, ids):
+        try:
+            id_str = StringUtils.parse_list_to_idstr(ids)
+            if id_str is not None and len(id_str) > 0:
+                self.conn()
+                with self.connection.cursor() as cursor:
+                    sql = "SELECT `id`, `name` from `business` where `id` in (%s) " % (id_str, )
+                    cursor.execute(sql)
+                    return cursor.fetchall()
+        except Exception, e:
+            traceback.print_exc()
+        return None
+
+    def add_batch_business_list(self, businesss):
+        try:
+            for busines in businesss:
+                local_business = self.query_business_list_by_ids([busines.id])
+                if local_business == None or len(local_business) == 0:
+                    self.conn()
+                    with self.connection.cursor() as cursor:
+                        sql = "INSERT INTO `business` (`id`, `name`) values(%s, %s)"
+                        cursor.execute(sql, (busines.id, busines.name))
+                        self.connection.commit()
+                else:
+                    self.conn()
+                    with self.connection.cursor() as cursor:
+                        sql = "UPDATE `business` set `name` = %s where `id` = %s"
+                        cursor.execute(sql, (busines.name, busines.id))
+                        self.connection.commit()
+
+        except Exception, e:
+            traceback.print_exc()
+        finally:
+            self.close()
+
+#//////////////////////////////////////////////////////////////////business/////////////////////////////////////////////////////////////////////////
+
+
+#//////////////////////////////////////////////////////////////////business-day/////////////////////////////////////////////////////////////////////////
+
+
+    def query_business_days_by_ids(self, ids):
+        try:
+            id_str = StringUtils.parse_list_to_idstr(ids)
+            if id_str is not None and len(id_str) > 0:
+                self.conn()
+                with self.connection.cursor() as cursor:
+                    sql = "SELECT `id`, `b_symbol`, `b_name`, `sell_money`, `buy_money`, `day`, `s_symbol`, `s_name` from `business_day` where `id` in (%s) " % (id_str, )
+                    cursor.execute(sql)
+                    return cursor.fetchall()
+        except Exception, e:
+            traceback.print_exc()
+	    print 'error'
+        return None
+
+    def add_batch_business_days(self, business_days):
+        try:
+            for business_day in business_days:
+                local_business_day = self.query_business_days_by_ids([business_day.id])
+                if local_business_day == None or len(local_business_day) == 0:
+                    self.conn()
+                    with self.connection.cursor() as cursor:
+                        sql = "INSERT INTO `business_day` (`id`, `b_symbol`, `b_name`, `sell_money`, `buy_money`, `day`, `s_symbol`, `s_name`) values('%s', '%s', '%s', '%s', '%s', %s, '%s', '%s')" % (business_day.id, business_day.b_symbol, business_day.b_name, business_day.sell_money, business_day.buy_money, "str_to_date('" + business_day.day + "','%Y-%m-%d')", business_day.s_symbol, business_day.s_name)
+			cursor.execute(sql)
+                        self.connection.commit()
+                else:
+                    self.conn()
+                    with self.connection.cursor() as cursor:
+                        sql = "UPDATE `business_day` set `b_symbol` = '%s', `b_name` = '%s', `sell_money`= '%s', `buy_money`= '%s', `day`= %s, `s_symbol`= '%s', `s_name`= '%s' where `id` = '%s'" % (business_day.b_symbol, business_day.b_name, business_day.sell_money, business_day.buy_money, "str_to_date('" + business_day.day + "', '%Y-%m-%d')", business_day.s_symbol, business_day.s_name, business_day.id)
+			cursor.execute(sql)
+                        self.connection.commit()
+
+        except Exception, e:
+            traceback.print_exc()
+        finally:
+            self.close()
+
+#//////////////////////////////////////////////////////////////////business-day/////////////////////////////////////////////////////////////////////////
+

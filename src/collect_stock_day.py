@@ -4,6 +4,7 @@ from vo.StockInfo import *
 from utils.TimeUtils import *
 from utils.FileUtils import *
 from dbs.GeodeClient import *
+from dbs.MysqlClient import *
 #from web.RecommendPoolServer import *
 from spider.StockListIncSpider import *
 from spider.StockDayIncSpider import *
@@ -67,7 +68,7 @@ def business_day_inc_start():
         business_list = business_list_spider.get_business_list()
 	
 	business_day_spider  = BusinessDayIncSpider()
-	business_day_spider.get_business_days([business_info.id for business_info in business_list])
+	business_day_spider.get_all_business_days([business_info.id for business_info in business_list])
 
     except Exception, e:
         traceback.print_exc()

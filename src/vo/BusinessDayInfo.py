@@ -8,6 +8,6 @@ class BusinessDayInfo:
 	self.b_name = ''		#营业部
 	self.sell_money = 0.0	#买入额(万元)
 	self.buy_money = 0.0	#卖出额(万元)
-	self.day = None	#交易日期
+	self.day = None		#交易日期
 	self.s_symbol = ''	#股票代码
 	self.s_name = ''	#股票名称

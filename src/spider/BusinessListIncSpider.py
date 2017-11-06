@@ -34,16 +34,16 @@ class BusinessListIncSpider:
             business_list = ParseForEMUtils.parse_business_list(content)
 	    while(business_list is not None and len(business_list) > 0):
 		#save
+		MysqlClient.get_instance().add_batch_business_list(business_list)
 		all_business.extend(business_list)
 #		print jsonpickle.encode(business_list)
-		print str(page) + ':' + str(len(business_list))
+		print 'business_list ' + str(page) + ':' + str(len(business_list))
 
 		page += 1
 		url = self.business_list_url.format(page_size, page, start_datestring, end_datestring)
 		content = EMStockUtils.get_html(url)
 		business_list = ParseForEMUtils.parse_business_list(content)
 
-		break
 
 	    return all_business
 	
