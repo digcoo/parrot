@@ -97,7 +97,7 @@ class IndicatorUtils:
             if MA30 is not None:
                  mas.append(MA30)
 
-            return min(mas)
+            return min(mas) if len(mas) > 0 else None
         except Exception, e:
             traceback.print_exc()
         return None
