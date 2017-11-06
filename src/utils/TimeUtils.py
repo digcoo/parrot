@@ -172,4 +172,5 @@ if __name__ == '__main__':
 #    print TimeUtils.lastday_of_month(2017, 9)
 #    print TimeUtils.is_lastday_of_month_from_datestamp(TimeUtils.get_current_datestamp())
 
-     print TimeUtils.minute_from_timestamp(TimeUtils.get_current_timestamp())
+#     print TimeUtils.minute_from_timestamp(TimeUtils.get_current_timestamp())
+    print TimeUtils.timestamp2timestring(1509967800)

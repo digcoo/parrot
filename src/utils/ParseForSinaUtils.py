@@ -240,7 +240,7 @@ class ParseForSinaUtils:
 		min_str = date_str + '1500'
 	    else:
 		min_str = TimeUtils.datestamp2datestring(realtime_stock_day.minute, TimeUtils.TIME_FORMAT_YYYYMMDDHHMM)
-
+	    print min_str
 	    realtime_stock_day.id = realtime_stock_day.symbol + min_str
 	    realtime_stock_day.day = TimeUtils.datestring2datestamp(min_str, TimeUtils.TIME_FORMAT_YYYYMMDDHHMM)
 

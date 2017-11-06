@@ -4,6 +4,7 @@ import jsonpickle
 import traceback
 from vo.StockInfo import *
 from utils.ParseForSinaUtils import *
+from utils.IndicatorUtils import *
 from dbs.GeodeClient import *
 from utils.BaseStockUtils import *
 from utils.LogUtils import *
@@ -129,6 +130,9 @@ class StockDayPackMatcher:
 
 	    #过滤开盘即涨停
 	    is_hit = is_hit & (realtime_stock_day.high > realtime_stock_day.low)
+
+            #高于最低日MA线
+            is_hit = is_hit & (realtime_stock_day.close > IndicatorUtils.Lowest_MA(current_hist_days, self.todaystamp))                 #昨日收盘价高于最低ma线
 
 	    #收红
 	    is_hit = is_hit & (realtime_stock_day.close > realtime_stock_day.op)
