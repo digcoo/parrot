@@ -21,8 +21,8 @@ class ModelTimeOpenRise:
     def match(self, realtime_stock_day, realtime_stock_times):
 	try:
 
-            if TimeUtils.is_after('11:30:00'):
-                return None
+#            if TimeUtils.is_after('11:30:00'):
+#                return None
 
 	    is_hit = True
 	    is_hit = (is_hit) and (realtime_stock_day.low == realtime_stock_day.op)
