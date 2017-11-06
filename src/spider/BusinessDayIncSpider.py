@@ -20,14 +20,43 @@ class BusinessDayIncSpider:
 
 #///////////////////////////////business_day/////////////////////////////////////////////////////////////////////////////////////////////////
 
+    #爬取营业部最近的交易记录
+    def get_latest_business_days(self, symbols):
+        try:
+            for symbol in symbols:
+
+                self.get_single_business_latest_day(symbol)
+
+        except Exception, e:
+            traceback.print_exc()
+        return None
+
+
+
+    def get_single_business_latest_day(self, symbol):
+        try:
+
+            page_size = 50
+            page = 1
+            url = self.business_day_url.format(page_size, page, symbol)
+            content = EMStockUtils.get_html(url)
+            business_days = ParseForEMUtils.parse_business_days(content)
+            if (business_days is not None and len(business_days) > 0):
+                MysqlClient.get_instance().add_batch_business_days(business_days)
+
+        except Exception, e:
+            traceback.print_exc()
+        return None
+
+
+
+    #爬去营业部所有的历史交易记录
     def get_all_business_days(self, symbols):
 	try:
 	    for symbol in symbols:
 
 		business_days = self.get_single_business_days(symbol)
 
-		break
-		
 	except Exception, e:
             traceback.print_exc()
 	return None
