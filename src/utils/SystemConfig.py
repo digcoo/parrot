@@ -26,10 +26,12 @@ class SystemConfig:
     SPIDER_BATCH_NO = 'spider.batch.no'
     SPIDER_PROCESSOR_NUM = 'spider.processor.num'
 
+    SPIDER_SCHEDULE_CRON_HOUR = 'spider.schedule.cron.hour'
+
     #persit
     SPIDER_INC_PERSIST = 'spider.inc.persit'
     SPIDER_HIT_PERSIST = 'spider.hit.persist'
-    
+
 
     __instance = None
 

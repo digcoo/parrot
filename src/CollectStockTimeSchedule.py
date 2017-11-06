@@ -45,9 +45,12 @@ batch_no = SystemConfig.get_instance().get(SystemConfig.PROJECT_SYMBOL, SystemCo
 #进程池中最大进程数
 process_pool = multiprocessing.Pool(processes=int(SystemConfig.get_instance().get(SystemConfig.PROJECT_SYMBOL, SystemConfig.SPIDER_PROCESSOR_NUM)))
 
+#进程运行小时段
+hour_stub = SystemConfig.get_instance().get(SystemConfig.PROJECT_SYMBOL, SystemConfig.SPIDER_SCHEDULE_CRON_HOUR)
+
 
 #股票日交易列表:每个交易日9点同步实时交易数据
-@scheduler.scheduled_job('cron', id='stock_time_realtime_spider', minute='*/1', hour='9-14', day_of_week='0-4', max_instances=1)
+@scheduler.scheduled_job('cron', id='stock_time_realtime_spider', minute='*/1', hour=hour_stub, day_of_week='0-4', max_instances=1)
 def stock_time_realtime_spider():
     try:
 
