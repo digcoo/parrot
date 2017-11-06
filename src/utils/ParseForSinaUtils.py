@@ -251,10 +251,8 @@ class ParseForSinaUtils:
 		last_realtime_stock_time = realtime_stock_times[len(realtime_stock_times) - 1]	#将当前数据覆盖当前分钟的分时数据
 		if last_realtime_stock_time.day == realtime_stock_day.day:
 		    realtime_stock_times[len(realtime_stock_times) - 1] = realtime_stock_day
-		    print 'set1 = ' + jsonpickle.encode(realtime_stock_day)
 		else:
 		    realtime_stock_times.append(realtime_stock_day)
-		    print 'set2 = ' + jsonpickle.encode(realtime_stock_day)
 	    return realtime_stock_times
 
 	return None

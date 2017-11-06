@@ -52,7 +52,7 @@ class StockTimeIncForSinaSpider:
 #			realtime_stock_day = BaseStockUtils.compose_realtime_stock_day_from_time_trades(realtime_time_stock_trades, symbol=symbol, last_close=last_close, today_stamp=date_stamp)
 			batch_hit = self.analyze(realtime_time_stock_trades, realtime_stock_day)
 			if  batch_hit is not None :
-			    LogUtils.info('stock_time_hit : ' + jsonpickle.encode(batch_hit))
+#			    LogUtils.info('stock_time_hit : ' + jsonpickle.encode(batch_hit))
 			    hit_list.append(batch_hit)
 
 		    #日线数据持久存储
