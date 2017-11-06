@@ -252,5 +252,3 @@ def cache_hist_days():
 
 httpserver.serve(application, host='0.0.0.0', port=9090)
 
-
-print 'cache hist days finished....'
