@@ -22,16 +22,23 @@ class ModelTimeMin:
 	try:
 
             if realtime_stock_day.symbol == 'sh603689':
-                LogUtils.info('\n\nModelTimeV60 realtime_stock_times : ' + jsonpickle.encode(realtime_stock_times) + '\n\n')
+                LogUtils.info('ModelTimeV60 realtime_stock_times : ' + jsonpickle.encode(realtime_stock_times) + '\n\n')
 
 	    if len(realtime_stock_times) < 2:
 		return None
 
 	    min_times	= realtime_stock_times
-	    min5_times	= BaseStockUtils.compose_stock_trades_for_minute(realtime_stock_times, 5)
-	    min15_times = BaseStockUtils.compose_stock_trades_for_minute(realtime_stock_times, 15)
-	    min30_times = BaseStockUtils.compose_stock_trades_for_minute(realtime_stock_times, 30)
-	    min60_times = BaseStockUtils.compose_stock_trades_for_minute(realtime_stock_times, 60)
+	    min5_times	= BaseStockUtils.compose_stock_trades_for_sina_minute(realtime_stock_times, 5)
+	    min15_times = BaseStockUtils.compose_stock_trades_for_sina_minute(realtime_stock_times, 15)
+	    min30_times = BaseStockUtils.compose_stock_trades_for_sina_minute(realtime_stock_times, 30)
+	    min60_times = BaseStockUtils.compose_stock_trades_for_sina_minute(realtime_stock_times, 60)
+
+            if realtime_stock_day.symbol == 'sh603689':
+                LogUtils.info('ModelTimeMin  min5_times : ' + jsonpickle.encode(min5_times) + '\n\n')
+		LogUtils.info('ModelTimeMin  min15_times : ' + jsonpickle.encode(min15_times) + '\n\n')
+		LogUtils.info('ModelTimeMin  min30_times : ' + jsonpickle.encode(min30_times) + '\n\n')
+		LogUtils.info('ModelTimeMin  min60_times : ' + jsonpickle.encode(min60_times) + '\n\n')
+
 
 
 	    is_hit = True

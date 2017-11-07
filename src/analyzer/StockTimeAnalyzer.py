@@ -64,7 +64,7 @@ class StockTimeAnalyzer:
 #	    match_model = self.add_match_model(match_model, self.model_time_ma.match(realtime_stock_trades_map))  #ModelTimeMA(TimeMA)
 #	    match_model = self.add_match_model(match_model, self.model_time_30.match(realtime_stock_day, realtime_stock_trades))  #ModelTime30(Time30)
 #	    match_model = self.add_match_model(match_model, self.model_time_rise.match(realtime_stock_day, realtime_stock_trades))  #ModelTimeRise(TimeRise)
-	    match_model = self.add_match_model(match_model, self.model_time_min.match(realtime_stock_day, realtime_stock_trades))  #ModelTimeMin(TimeMin)
+#	    match_model = self.add_match_model(match_model, self.model_time_min.match(realtime_stock_day, realtime_stock_trades))  #ModelTimeMin(TimeMin)
 	    match_model = self.add_match_model(match_model, self.model_time_v60.match(realtime_stock_day, realtime_stock_trades))  #ModelTimeV60(TimeV60)
 	    match_model = self.add_match_model(match_model, self.model_time_open_rise.match(realtime_stock_day, realtime_stock_trades))  #ModelTimeOpenRise(OpenRise)
 

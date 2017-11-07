@@ -371,7 +371,7 @@ class BaseStockUtils:
                 current_hist_months.insert(0, last_period_day)
         return current_hist_months
 
-    #封装分时数据，如5分钟，15分钟，30分钟，60分钟
+    #封装分时数据，如5分钟，15分钟，30分钟，60分钟(分钟分笔数据)
     @staticmethod
     def compose_stock_trades_for_minute(hist_trades, intv):	#顺时针
 	com_stock_trades = []
@@ -429,6 +429,31 @@ class BaseStockUtils:
 	    realtime_stock_day.symbol = symbol
 	    return realtime_stock_day
 	return None
+
+    #封装分时数据，如5分钟，15分钟，30分钟，60分钟(分钟汇总数据)
+    @staticmethod
+    def compose_stock_trades_for_sina_minute(hist_trades, intv):     #顺时针
+        com_stock_trades = []
+	min60s = ['10:30', '11:30', '14:00' , '15:00']
+	is_end = False
+        for loop in range(0, len(hist_trades)):
+	    is_end = False
+            hist_trade = hist_trades[loop]
+	    if intv == 60:
+		timestring = TimeUtils.timestamp2timestring(hist_trade.day)
+		for min60 in min60s:
+		    if timestring.find(min60) > -1:
+			com_stock_trades.append(hist_trade)
+			is_end = True
+	    else:
+                if TimeUtils.minute_from_timestamp(hist_trade.day) % intv == 0:
+                    com_stock_trades.append(hist_trade)
+		    is_end = True
+
+            if loop == len(hist_trades)-1 and not is_end:
+                com_stock_trades.append(hist_trade)
+        return com_stock_trades
+
 
     # 封装命中数据格式
     @staticmethod
