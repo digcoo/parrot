@@ -64,10 +64,10 @@ def stock_time_inc_start():
 def business_day_inc_start():
     try:
 
-#        business_list_spider = BusinessListIncSpider()
-#        business_list = business_list_spider.get_business_list()
+        business_list_spider = BusinessListIncSpider()
+        business_list = business_list_spider.get_business_list()
 
-	all_business_list = MysqlClient.get_instance().query_all_business_list()[:2]
+	all_business_list = MysqlClient.get_instance().query_all_business_list()
 	business_day_spider  = BusinessDayIncSpider()
 	business_day_spider.get_latest_business_days([business_info['id'] for business_info in all_business_list])
 
