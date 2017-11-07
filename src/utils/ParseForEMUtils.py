@@ -96,14 +96,15 @@ class ParseForEMUtils:
                 json_list = jsonpickle.decode(json_data).get('data')
                 business_days = []
                 for json_obj in json_list:
+#		    print jsonpickle.encode(json_obj)
                     business_day = BusinessDayInfo()
                     business_day.b_symbol = json_obj.get('SalesCode')
                     business_day.b_name = json_obj.get('SalesName')
 		    business_day.s_symbol = 'sh' + json_obj.get('SCode') if json_obj.get('SCode').startswith('6') else 'sz' + json_obj.get('SCode')
 		    business_day.s_name = json_obj.get('SName')
 		    business_day.day = json_obj.get('TDate')
-		    business_day.sell_money = float(json_obj.get('ActSellNum')) if len(json_obj.get('ActSellNum')) > 2 else 0.0
-		    business_day.buy_money = float(json_obj.get('ActBuyNum')) if len(json_obj.get('ActBuyNum')) > 2 else 0.0
+		    business_day.sell_money = float(json_obj.get('SMoney')) if len(json_obj.get('SMoney')) > 1 else 0.0
+		    business_day.buy_money = float(json_obj.get('BMoney')) if len(json_obj.get('BMoney')) > 1 else 0.0
 		    business_day.id = business_day.b_symbol + business_day.s_symbol + json_obj.get('TDate').replace('-', '')
                     business_days.append(business_day)
                 return business_days if len(business_days) > 0 else None

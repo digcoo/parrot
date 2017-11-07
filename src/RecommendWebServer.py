@@ -114,6 +114,26 @@ def hit_list():
     return '{"code":"500"}'
 
 
+@route('/digcoo/business/daily/gettrades', method='GET')
+def hit_list():
+    try:
+        response.set_header("Access-Control-Allow-Origin", "*")
+        stub_day = str(request.query.day)
+        page = int(request.query.page)
+        model = str(request.query.model)
+        status = str(request.query.status)
+        symbol = str(request.query.symbol)
+        size = int(request.query.size)
+        ret = mysql_client.query_board_daily_page_list(page)
+        if ret != None:
+            return '{"total":'  + str(ret['total_page'] * size) + ', "msg":"success", "res":' + json.dumps(ret['data'], cls=DateEncoder) + '}'
+
+    except Exception, e:
+        traceback.print_exc()
+    return '{"code":"500"}'
+
+
+
 @route('/digcoo/hit/resistance/<symbol>', method='GET')
 def hit_resistance(symbol):
     try:

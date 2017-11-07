@@ -24,8 +24,11 @@ class BusinessDayIncSpider:
     def get_latest_business_days(self, symbols):
         try:
             for symbol in symbols:
+#		if symbol != '80033630':
+#		    continue
                 business_days = self.get_single_business_latest_day(symbol)
-		LogUtils.info(symbol + ' business days count = ' + str(len(business_days)))
+#		print jsonpickle.encode(business_days)
+		LogUtils.info(symbol + ' business days count = ' + (str(len(business_days)) if business_days is not None else '0'))
 		time.sleep(2)
 
         except Exception, e:

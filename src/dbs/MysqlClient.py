@@ -2,6 +2,7 @@ import pymysql.cursors
 import datetime
 import time
 import traceback
+import jsonpickle
 from utils.StringUtils import *
 
 class MysqlClient:
@@ -84,6 +85,39 @@ class MysqlClient:
             traceback.print_exc()
         finally:
             self.close()
+
+
+#=================================================board================================================================
+
+
+
+    def query_board_daily_page_list(self, page):
+        try:
+            self.conn()
+            with self.connection.cursor() as cursor:
+                #latest_page_day
+                all_days_sql = "select `day` from business_day group by `day` order by `day` desc"
+		cursor.execute(all_days_sql)
+		latest_days =  cursor.fetchall()
+		target_day = latest_days[page - 1]['day']
+		total_days = len(latest_days)
+
+		#board_trades
+		board_trades_sql = "select `b_symbol`, `b_name`, `s_symbol`, `s_name`, `day`, `sell_money`,`buy_money` FROM `business_day` where `day` = '" + str(target_day) + "'"
+		cursor.execute(board_trades_sql)
+                board_trades = cursor.fetchall()
+
+                return {'total_page' : total_days, 'data' : board_trades}
+
+
+        except Exception, e:
+            traceback.print_exc()
+        finally:
+            self.close()
+
+
+
+#=================================================board================================================================
 
 
 
