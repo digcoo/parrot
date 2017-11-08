@@ -10,10 +10,6 @@ from utils.BaseStockUtils import *
 from utils.LogUtils import *
 from dto.DataContainer import *
 
-from quant.ModelTimeMA import *
-from quant.ModelTime30 import *
-from quant.ModelTimeRise import *
-from quant.ModelTimeMin import *
 from quant.ModelTimeV60 import *
 from quant.ModelTimeOpenRise import *
 
@@ -37,10 +33,10 @@ class StockTimeAnalyzer:
 #            LogUtils.info('==============stock_time_analyzer_model_init start========================================')
 	    start  = int(time.mktime(datetime.datetime.now().timetuple()))
 
-	    self.model_time_ma = ModelTimeMA(self.data_container.hist_times, self.todaystamp)
-	    self.model_time_30 = ModelTime30(self.data_container.hist_days, self.data_container.hist_times, self.todaystamp)
-	    self.model_time_rise = ModelTimeRise(self.data_container.hist_days, self.data_container.hist_times, self.todaystamp)
-	    self.model_time_min = ModelTimeMin(self.data_container.hist_days, self.data_container.hist_times, self.todaystamp)
+#	    self.model_time_ma = ModelTimeMA(self.data_container.hist_times, self.todaystamp)
+#	    self.model_time_30 = ModelTime30(self.data_container.hist_days, self.data_container.hist_times, self.todaystamp)
+#	    self.model_time_rise = ModelTimeRise(self.data_container.hist_days, self.data_container.hist_times, self.todaystamp)
+#	    self.model_time_min = ModelTimeMin(self.data_container.hist_days, self.data_container.hist_times, self.todaystamp)
 	    self.model_time_v60 = ModelTimeV60(self.data_container.hist_days, self.data_container.hist_times, self.todaystamp)
 	    self.model_time_open_rise = ModelTimeOpenRise(self.data_container.hist_days, self.data_container.hist_times, self.todaystamp)
 
@@ -135,7 +131,7 @@ class StockTimeAnalyzer:
             is_hit = is_hit & (realtime_stock_day.high > realtime_stock_day.low)
 
 	    #高于最低日MA线
-	    is_hit = is_hit & (realtime_stock_day.close > IndicatorUtils.Lowest_MA(current_hist_days, self.todaystamp))                 #昨日收盘价高于最低ma线
+#	    is_hit = is_hit & (realtime_stock_day.close > IndicatorUtils.Lowest_MA(current_hist_days, self.todaystamp))                 #昨日收盘价高于最低ma线
 
             #收红
 #            is_hit = is_hit & (realtime_stock_day.close > realtime_stock_day.op)
@@ -143,7 +139,7 @@ class StockTimeAnalyzer:
             #过滤向下价格偏离
 #            is_hit = is_hit & (realtime_stock_day.money/realtime_stock_day.vol > 0.994 * last1_stock_day.close)         #均价高于昨日收盘价
 #            is_hit = is_hit & (realtime_stock_day.close > 0.994 * last1_stock_day.close)         #当前价格高于昨日收盘价
-#            is_hit = is_hit & (realtime_stock_day.close > 0.996 * realtime_stock_day.money/realtime_stock_day.vol)      #当前价格高于均价
+            is_hit = is_hit & (realtime_stock_day.close > realtime_stock_day.money/realtime_stock_day.vol)      #当前价格高于均价
 #	    is_hit = is_hit & (realtime_stock_day.close > last0_ma5)							#当前价格高于MA5
 
 

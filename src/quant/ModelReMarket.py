@@ -61,6 +61,7 @@ class ModelReMarket:
 	    is_hit = True
 		
 #	    is_hit = is_hit & (realtime_stock_day.close > 0.998 * realtime_stock_day.money/realtime_stock_day.vol)      #当前价格高于均线
+	    is_hit = is_hit & (realtime_stock_day.close > realtime_stock_day.money/realtime_stock_day.vol)      #当前价格高于均价
 
             if is_hit:
                 return (self.candidate_stocks[realtime_stock_day.symbol][0] + '-' +  str(0), )

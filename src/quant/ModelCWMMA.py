@@ -58,6 +58,7 @@ class ModelCWMMA:
             is_cross_month_ma = is_cross_month_ma & (last0_stock_month.low < last0_max_month_ma)		#调整地域月K线
 	    is_cross_month_ma = is_cross_month_ma & (last0_stock_month.close > 1.045 * last0_stock_month.op)                #月线收红
 #	    is_cross_month_ma = is_cross_month_ma & (last0_stock_month.close > last0_max_month_ma)  #收于周K线之上
+	    is_hit = is_hit & (realtime_stock_day.close > realtime_stock_day.money/realtime_stock_day.vol)      #当前价格高于均价
 	    
 
 	    is_hit = is_hit & (is_cross_week_ma or is_cross_month_ma)
