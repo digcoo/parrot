@@ -39,7 +39,7 @@ class ModelBoard:
                 return None
 
             is_hit = True
-	    return is_hit
+	    return (self.candidate_stocks[realtime_stock_day.symbol][0] + '-' +  str(0), )
 
             is_hit = is_hit & (realtime_stock_day.high > realtime_stock_day.last_close)                #当前价高于昨日收盘价
 
