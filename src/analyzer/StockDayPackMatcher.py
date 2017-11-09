@@ -9,6 +9,7 @@ from dbs.GeodeClient import *
 from utils.BaseStockUtils import *
 from utils.LogUtils import *
 
+from quant.ModelBoard import *
 from quant.ModelUpper import *
 from quant.ModelCover import *
 from quant.ModelBurst import *
@@ -41,6 +42,8 @@ class StockDayPackMatcher:
             LogUtils.info('==============model_init start========================================')
 	    start  = int(time.mktime(datetime.datetime.now().timetuple()))
 
+
+	    self.model_board = ModelBoard(self.todaystamp)
 	    self.model_upper = ModelUpper(self.latest_days, self.todaystamp)
 	    self.model_ma_scatter = ModelMAScatter(self.latest_days, self.todaystamp)
 	    self.model_min_v = ModelMinV(self.latest_days, self.todaystamp)
@@ -52,6 +55,7 @@ class StockDayPackMatcher:
 	    self.model_dwm_ma = ModelDWMMA(self.latest_days, self.latest_weeks, self.todaystamp)
 	    self.model_cwm_ma = ModelCWMMA(self.latest_days, self.latest_weeks, self.latest_months, self.todaystamp)
 	    self.model_clwm_ma = ModelCLWMMA(self.latest_days, self.latest_weeks, self.latest_months, self.todaystamp)
+	    
 
 	    end2= int(time.mktime(datetime.datetime.now().timetuple()))
 	    LogUtils.info('model_init take %s seconds' % (str(end - start), ))
@@ -66,6 +70,7 @@ class StockDayPackMatcher:
     def match(self, realtime_stock_day):		#model_tup:(model_name, weight)
 	match_model = None
 	try:
+	    match_model = self.add_match_model(match_model, self.model_board.match(realtime_stock_day)) #ModelBoard(Board)
 	    match_model = self.add_match_model(match_model, self.model_upper.match(realtime_stock_day))	#ModelUpper(Upper)
 	    match_model = self.add_match_model(match_model, self.model_ma_scatter.match(realtime_stock_day)) #ModelMAScatter(MAScatter)
             match_model = self.add_match_model(match_model, self.model_cover.match(realtime_stock_day))  #ModelCover(Cover)
@@ -91,7 +96,8 @@ class StockDayPackMatcher:
         try:
 
 	    #忽略
-	    if match_model.find('ReMark-') > -1 or match_model.find('Upper-') > -1 or match_model.find('Cover-') > -1  or match_model.find('MAScatter-') > -1 :
+	    if match_model.find('ReMark-') > -1 or match_model.find('Upper-') > -1 or match_model.find('Cover-') > -1  or match_model.find('MAScatter-') > -1 or match_model.find('Board-') > -1:
+
 		return True
 
             hist_weeks = self.latest_weeks[realtime_stock_day.symbol]

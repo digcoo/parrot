@@ -1,3 +1,5 @@
+#encoding=utf-8
+
 import pymysql.cursors
 import datetime
 import time
@@ -89,8 +91,7 @@ class MysqlClient:
 
 #=================================================board================================================================
 
-
-
+    #查询龙虎榜每日的交易
     def query_board_daily_page_list(self, page):
         try:
             self.conn()
@@ -114,6 +115,37 @@ class MysqlClient:
             traceback.print_exc()
         finally:
             self.close()
+	return None
+
+
+    #查询龙虎榜近几日交易
+    def query_board_list_for_ndays(self, ndays):
+        try:
+            self.conn()
+            with self.connection.cursor() as cursor:
+                #latest_page_day
+                all_days_sql = "select `day` from business_day group by `day` order by `day` desc"
+                cursor.execute(all_days_sql)
+                latest_days =  cursor.fetchall()
+                target_days = [str(latest_day['day']) for latest_day in latest_days[:ndays]]
+		target_days_sql = ""
+		for target_day in target_days:
+		    target_days_sql = target_days_sql + "'" + target_day + "',"
+		
+		target_days_sql = target_days_sql[:len(target_days_sql)-1]
+
+                #board_trades
+                board_trades_sql = "select distinct(`s_symbol`), `s_name` FROM `business_day` where `day` in (" + target_days_sql + ")"
+                cursor.execute(board_trades_sql)
+                return cursor.fetchall()
+
+        except Exception, e:
+            traceback.print_exc()
+        finally:
+            self.close()
+
+	return None
+
 
 
 

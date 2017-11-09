@@ -118,11 +118,7 @@ def hit_list():
 def hit_list():
     try:
         response.set_header("Access-Control-Allow-Origin", "*")
-        stub_day = str(request.query.day)
         page = int(request.query.page)
-        model = str(request.query.model)
-        status = str(request.query.status)
-        symbol = str(request.query.symbol)
         size = int(request.query.size)
         ret = mysql_client.query_board_daily_page_list(page)
         if ret != None:

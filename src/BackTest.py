@@ -49,6 +49,7 @@ from ModelTimeRise import *
 from ModelCover import *
 from ModelTimeMin import *
 from ModelTimeV60 import *
+from ModelBoard import *
 
 
 from analyzer.StockTimeAnalyzer import *
@@ -292,6 +293,25 @@ class BackTest:
 	
 
 
+
+    def test_for_board_today_match(self, symbol):
+
+        geode_client = GeodeClient()
+
+        hist_symbols_days = {}
+
+        latest_days = geode_client.query_stock_days_latest(symbol, 300)
+
+#       stock_today = SinaStockUtils.get_sina_stock_day(symbol)[0]
+
+        stock_today = latest_days[0]
+
+        model_test = ModelBoard(stock_today.day)
+
+        print model_test.match(stock_today)
+
+
+
 if __name__ == '__main__':
     base_test = BackTest()
 #    base_test.test_hit()
@@ -299,7 +319,8 @@ if __name__ == '__main__':
 #    base_test.test_for_week_ma_match('sz000058')
 #    base_test.test_for_month_ma_match('sz000633')
 #    base_test.test_for_time_ma_match('sz002227')
-    base_test.test_for_spider('sz002378')
+#    base_test.test_for_spider('sz002378')
+    base_test.test_for_board_today_match('sh603466')
 
 #    base_test.import_stocks_days()
 #    base_test.latest_resistance_price('sz000008')
