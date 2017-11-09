@@ -40,7 +40,7 @@ class ModelBoard:
 
             is_hit = True
 
-            is_hit = is_hit & (realtime_stock_day.high > realtime_stock_day.last_close)                #当前价高于昨日收盘价
+            is_hit = is_hit & (realtime_stock_day.close > realtime_stock_day.last_close)                #当前价高于昨日收盘价
 	    is_hit = is_hit & (realtime_stock_day.close > realtime_stock_day.money/realtime_stock_day.vol)      #当前价格高于均价
 
             if is_hit:
