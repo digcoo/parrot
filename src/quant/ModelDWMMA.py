@@ -28,10 +28,10 @@ class ModelDWMMA:
 	    current_hist_days = BaseStockUtils.compose_realtime_stock_days(hist_days, realtime_stock_day)
 
 	    last0_stock_week = hist_weeks[0] if (len(hist_weeks) > 0 and TimeUtils.is_same_week_with_datestamp(hist_weeks[0].day, self.todaystamp)) else None      #本周周K线(不包括当天)
-	    last1_max_daily_ma = IndicatorUtils.ALL_MA(hist_days, self.todaystamp)              #昨日日K线
-	    last0_max_daily_ma = IndicatorUtils.ALL_MA(current_hist_days, TimeUtils.date_add(self.todaystamp, 7))              #今日日K线
-	    last1_max_week_ma = IndicatorUtils.ALL_MA(hist_weeks, self.todaystamp)		#上周周K线
-	    last0_max_week_ma = IndicatorUtils.ALL_MA(hist_weeks, TimeUtils.date_add(self.todaystamp, 7))              #本周周K线
+	    last1_max_daily_ma = IndicatorUtils.MAX_MA(hist_days, self.todaystamp)              #昨日日K线
+	    last0_max_daily_ma = IndicatorUtils.MAX_MA(current_hist_days, TimeUtils.date_add(self.todaystamp, 7))              #今日日K线
+	    last1_max_week_ma = IndicatorUtils.MAX_MA(hist_weeks, self.todaystamp)		#上周周K线
+	    last0_max_week_ma = IndicatorUtils.MAX_MA(hist_weeks, TimeUtils.date_add(self.todaystamp, 7))              #本周周K线
 
 	    is_hit = True
 

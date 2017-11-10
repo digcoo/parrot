@@ -36,10 +36,10 @@ class ModelCWMMA:
             current_hist_months = BaseStockUtils.compose_realtime_stock_months(hist_months, realtime_stock_day)
 
 
-            last1_max_week_ma = IndicatorUtils.ALL_MA(hist_weeks, self.todaystamp)              #上周周K线
-            last0_max_week_ma = IndicatorUtils.ALL_MA(current_hist_weeks, TimeUtils.date_add(self.todaystamp, 7))              #本周周K
-            last1_max_month_ma = IndicatorUtils.ALL_MA(hist_months, self.todaystamp)              #上月月K线
-            last0_max_month_ma = IndicatorUtils.ALL_MA(current_hist_months, TimeUtils.lastday_of_month_from_datestamp(self.todaystamp))              #本月月K线
+            last1_max_week_ma = IndicatorUtils.MAX_MA(hist_weeks, self.todaystamp)              #上周周K线
+            last0_max_week_ma = IndicatorUtils.MAX_MA(current_hist_weeks, TimeUtils.date_add(self.todaystamp, 7))              #本周周K
+            last1_max_month_ma = IndicatorUtils.MAX_MA(hist_months, self.todaystamp)              #上月月K线
+            last0_max_month_ma = IndicatorUtils.MAX_MA(current_hist_months, TimeUtils.lastday_of_month_from_datestamp(self.todaystamp))              #本月月K线
 
 
             last1_stock_week = current_hist_weeks[1] if len(current_hist_weeks) > 1 else None            #上周收盘周K线

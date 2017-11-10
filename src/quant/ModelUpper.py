@@ -71,8 +71,8 @@ class ModelUpper:
 
 	    current_hist_days = BaseStockUtils.compose_realtime_stock_days(hist_days, realtime_stock_day)
 
-            last1_max_daily_ma = IndicatorUtils.ALL_MA(hist_days, self.todaystamp)              #昨日日K线
-            last0_max_daily_ma = IndicatorUtils.ALL_MA(current_hist_days, TimeUtils.date_add(self.todaystamp, 7))              #今日日K线
+            last1_max_daily_ma = IndicatorUtils.MAX_MA(hist_days, self.todaystamp)              #昨日日K线
+            last0_max_daily_ma = IndicatorUtils.MAX_MA(current_hist_days, TimeUtils.date_add(self.todaystamp, 7))              #今日日K线
 	    last0_ma5	       = IndicatorUtils.MA(current_hist_days, 5, self.todaystamp) 
 
             is_hit = True

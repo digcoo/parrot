@@ -59,7 +59,7 @@ class IndicatorUtils:
 
 
     @staticmethod
-    def ALL_MA(hist_days, todaystamp):
+    def MAX_MA(hist_days, todaystamp):
 	try:
 	    MA5 = IndicatorUtils.MA(hist_days, 5, todaystamp)
 #	    LogUtils.info('MA5 = ' + str(MA5))
