@@ -83,19 +83,19 @@ class IndicatorUtils:
 
             MA5 = IndicatorUtils.MA(hist_days, 5, todaystamp)
 	    if MA5 is not None:
-		 mas.append(MA5)
+		mas.append(MA5)
 
             MA10 = IndicatorUtils.MA(hist_days, 10, todaystamp)
             if MA10 is not None:
-                 mas.append(MA10)
+		mas.append(MA10)
 
             MA20 = IndicatorUtils.MA(hist_days, 20, todaystamp)
             if MA20 is not None:
-                 mas.append(MA20)
+		mas.append(MA20)
 
             MA30 = IndicatorUtils.MA(hist_days, 30, todaystamp)
             if MA30 is not None:
-                 mas.append(MA30)
+                mas.append(MA30)
 
             return min(mas) if len(mas) > 0 else None
         except Exception, e:
