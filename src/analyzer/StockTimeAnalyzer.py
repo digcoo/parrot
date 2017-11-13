@@ -132,8 +132,7 @@ class StockTimeAnalyzer:
 
 	    #高于最低日MA线
 #	    is_hit = is_hit & (realtime_stock_day.close > IndicatorUtils.Lowest_MA(current_hist_days, self.todaystamp))                 #昨日收盘价高于最低ma线
-
-	    is_hit = is_hit & (realtime_stock_day.close > IndicatorUtils.Lowest_MA(current_hist_weeks, TimeUtils.date_add(self.todaystamp, 1)))                 #昨日收盘价高于最低周ma线
+	    is_hit = is_hit & (realtime_stock_day.close > IndicatorUtils.Lowest_MA(current_hist_weeks, TimeUtils.date_add(self.todaystamp, 1)))    #昨日收盘价高于最低周ma线
 
             #收红
             is_hit = is_hit & (realtime_stock_day.close > realtime_stock_day.op)
@@ -145,7 +144,7 @@ class StockTimeAnalyzer:
 #	    is_hit = is_hit & (realtime_stock_day.close > last0_ma5)							#当前价格高于MA5
 
 	    #价格过滤
-	    is_hit = is_hit & (realtime_stock_day.close > 7.0 and realtime_stock_day.close < 80.0)			#当前价格的实体区间
+	    is_hit = is_hit & (realtime_stock_day.close > 6.0 and realtime_stock_day.close < 80.0)			#当前价格的实体区间
 
 
 #           if not is_hit:
