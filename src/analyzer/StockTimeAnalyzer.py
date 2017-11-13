@@ -144,6 +144,9 @@ class StockTimeAnalyzer:
             is_hit = is_hit & (realtime_stock_day.close > realtime_stock_day.money/realtime_stock_day.vol)      #当前价格高于均价
 #	    is_hit = is_hit & (realtime_stock_day.close > last0_ma5)							#当前价格高于MA5
 
+	    #价格过滤
+	    is_hit = is_hit & (realtime_stock_day.close > 10.0 and realtime_stock_day.close < 80.0)			#当前价格的实体区间
+
 
 #           if not is_hit:
 #               LogUtils.info('filter symbol :' + realtime_stock_day.symbol + ', model = ' + match_model)

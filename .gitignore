@@ -10,5 +10,6 @@ MANIFEST
 *.swo
 *.swp
 *.out
+*.log
 dist
 build
