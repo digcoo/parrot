@@ -3,7 +3,6 @@
 '''
 同步数据入库
 '''
-
 from apscheduler.schedulers.blocking import BlockingScheduler
 from spider.StockListIncSpider import *
 from spider.StockDayIncSpider import *
@@ -12,17 +11,16 @@ from spider.StockMonthIncSpider import *
 from spider.PlateListIncForThsSpider import *
 from spider.PlateDayIncForThsSpider import *
 from spider.StockTimeIncSpider import *
-import time
-from utils.LogUtils import *
-from utils.SinaStockUtils import *
 from spider.BusinessListIncSpider import *
 from spider.BusinessDayIncSpider import *
 
-scheduler = BlockingScheduler()
+import time
+from utils.LogUtils import *
+from utils.SinaStockUtils import *
 
-#股票日交易列表:每个交易日15：10更新交易数据
-@scheduler.scheduled_job('cron', id='stock_day_inc_spider', minute='30', day_of_week='0-4', hour='15')
-def stock_day_inc_spider():
+scheduler = BlockingScheduler()
+@scheduler.scheduled_job('cron', id='stock_day_sync_task', minute='30', day_of_week='0-4', hour='15')
+def stock_day_sync_task():
 
     try:
 
@@ -43,7 +41,7 @@ def stock_day_inc_spider():
 	LogUtils.info('===============================stock_list_inc_spider end=============================================\n\n\n')
 
 
-
+	'''
 	LogUtils.info('===============================plate_list_inc_spider start=============================================')
 	start  = int(time.mktime(datetime.datetime.now().timetuple()))
 
@@ -65,7 +63,7 @@ def stock_day_inc_spider():
 	end  = int(time.mktime(datetime.datetime.now().timetuple()))
 	LogUtils.info('rek_plate_stock_inc_spider take %s seconds' % (str(end - start), ))
 	LogUtils.info('===============================rel_plate_stock_inc_spider end=============================================\n\n\n')
-
+	'''
 
 
 
@@ -122,7 +120,7 @@ def stock_day_inc_spider():
         LogUtils.info('===============================business_day_inc_spider start=============================================')
         start  = int(time.mktime(datetime.datetime.now().timetuple()))
 
-        business_list = MysqlClient.get_instance().query_all_business_list()
+	business_list = MysqlClient.get_instance().query_all_business_list()
         business_day_inc_spider = BusinessDayIncSpider()
         business_day_inc_spider.get_latest_business_days([business['id'] for business in business_list])
 
@@ -158,5 +156,6 @@ def stock_day_inc_spider():
     except Exception:
 	traceback.print_exc()
 
-
 scheduler.start()
+
+LogUtils.info('stock_day_sync_task finish...')

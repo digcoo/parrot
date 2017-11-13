@@ -4,6 +4,6 @@ project_dir=/home/ubuntu/git_project/parrot
 
 cd $project_dir/src/
 
-python RecommendWebServer.py
+nohup python RecommendWebServer.py & >> reg.log
 
 exit 0
