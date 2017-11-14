@@ -45,7 +45,7 @@ class ModelUpper:
 	last1_is_red = BaseStockUtils.pre_is_red(hist_days, 1, self.todaystamp)				#昨日收红
 
 	is_upper = True
-	is_upper = is_upper & (last1_is_red)
+#	is_upper = is_upper & (last1_is_red)
 	is_upper = is_upper & (last1_upper_shadow >= 0.02)	#昨日上影线
 #	is_upper = is_upper & (last1_column_shadow <= 0.04)	#昨日实体柱
 	is_upper = is_upper & (last1_lower_shadow < 0.015)	#昨日下影线
