@@ -18,6 +18,7 @@ class SystemConfig:
     #redis
     REDIS_SERVER_IP = 'redis.server.ip'
     REDIS_SERVER_PORT = 'redis.server.port'
+    REDIS_SERVER_PASSWORD = 'redis.server.password'
 
     #spider
     SPIDER_SYMBOL_STUB_START = 'spider.symbol.stub.start'

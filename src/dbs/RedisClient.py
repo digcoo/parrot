@@ -17,7 +17,7 @@ class RedisClient:
 
 
     def __init__(self):
-        self.client = redis.Redis(host = SystemConfig.get_instance().get(SystemConfig.PROJECT_SYMBOL, SystemConfig.REDIS_SERVER_IP), port = SystemConfig.get_instance().get(SystemConfig.PROJECT_SYMBOL, SystemConfig.REDIS_SERVER_PORT))
+        self.client = redis.Redis(host = SystemConfig.get_instance().get(SystemConfig.PROJECT_SYMBOL, SystemConfig.REDIS_SERVER_IP), port = SystemConfig.get_instance().get(SystemConfig.PROJECT_SYMBOL, SystemConfig.REDIS_SERVER_PORT), password=SystemConfig.get_instance().get(SystemConfig.PROJECT_SYMBOL, SystemConfig.REDIS_SERVER_PASSWORD))
 	self.key_day = 'day'			
 	self.key_time = 'time'			#分时推荐map-time:key
 

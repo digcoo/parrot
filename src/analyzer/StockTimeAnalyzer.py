@@ -91,7 +91,8 @@ class StockTimeAnalyzer:
             hist_months = self.data_container.hist_months[realtime_stock_day.symbol]
 
             last1_stock_day = BaseStockUtils.pre_stock_day(hist_days, 1, self.todaystamp)
-            if last1_stock_day is None:
+	    last2_stock_day = BaseStockUtils.pre_stock_day(hist_days, 2, self.todaystamp)
+            if last1_stock_day is None or last2_stock_day is None:
                 return None
 
             current_hist_days = BaseStockUtils.compose_realtime_stock_days(hist_days, realtime_stock_day)
@@ -147,6 +148,7 @@ class StockTimeAnalyzer:
 	    #价格过滤
 	    is_hit = is_hit & (realtime_stock_day.close > 6.0 and realtime_stock_day.close < 80.0)			#当前价格的实体区间
 
+	    #回避直线拉伸
 
 #           if not is_hit:
 #               LogUtils.info('filter symbol :' + realtime_stock_day.symbol + ', model = ' + match_model)
