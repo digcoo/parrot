@@ -17,13 +17,14 @@ class DataContainer:
 	self.suspend_symbols = []                #今日停盘的票
 	self.market_symbols = []                 #正常交易的票
 	self.re_market_symbols = []              #今日复盘的票
+	self.stock_map = {}			
 	try:
 
 #            self.hist_times = self.cache_hist_times(symbols)
             self.hist_days = self.cache_hist_days(symbols)
             self.hist_weeks = self.cache_hist_weeks(symbols)
             self.hist_months = self.cache_hist_months(symbols)
-	    self.suspend_symbols, self.market_symbols, self.re_market_symbols = self.cache_market_stocks(symbols)
+	    self.suspend_symbols, self.market_symbols, self.re_market_symbols, self.stock_map = self.cache_market_stocks(symbols)
 
 	except Exception, e:
 	    traceback.print_exc()
@@ -93,4 +94,4 @@ class DataContainer:
 	#获取当日开盘数据
 	current_stocks_day = SinaStockUtils.get_current_stock_days(symbols)
 	(suspend_stocks, market_stocks, re_market_stocks) = ParseForSinaUtils.compose_stocks_market(all_stocks, current_stocks_day)
-	return ParseForSinaUtils.compose_symbols(suspend_stocks, market_stocks, re_market_stocks)
+	return ParseForSinaUtils.compose_symbols(suspend_stocks, market_stocks, re_market_stocks) + (ParseForSinaUtils.compose_stock_map(all_stocks), )

@@ -239,7 +239,7 @@ def convert_json(data):
     final_data = []
     if data is not None:
 	for cursor in data:
-	    item = {'symbol':cursor[0], 'op':cursor[1], 'high':cursor[2], 'low':cursor[3], 'close':cursor[4], 'last_close':cursor[5], 'model':cursor[6]}
+	    item = {'symbol':cursor[0], 'name':cursor[1], 'op':cursor[2], 'high':cursor[3], 'low':cursor[4], 'close':cursor[5], 'last_close':cursor[6], 'model':cursor[7]}
 	    final_data.append(item)
     return final_data
 

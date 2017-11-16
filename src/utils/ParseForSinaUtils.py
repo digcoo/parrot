@@ -272,3 +272,12 @@ class ParseForSinaUtils:
         for stock in re_market_stocks:
             re_market_symbols.append(stock.id)
         return suspend_symbols, market_symbols, re_market_symbols
+
+
+    @staticmethod
+    def compose_stock_map(stocks):
+	stock_map = {}
+	if stocks is not None:
+	    for stock in stocks:
+		stock_map[stock.id] = stock
+	return stock_map

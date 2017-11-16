@@ -457,6 +457,6 @@ class BaseStockUtils:
 
     # 封装命中数据格式
     @staticmethod
-    def compose_hit_data(realtime_stock_day, model_tup):
-	return (realtime_stock_day.symbol, realtime_stock_day.op, realtime_stock_day.high, realtime_stock_day.low, realtime_stock_day.close, realtime_stock_day.last_close) +  model_tup
+    def compose_hit_data(realtime_stock_day, model_tup, stock):
+	return (realtime_stock_day.symbol, stock.name, realtime_stock_day.op, realtime_stock_day.high, realtime_stock_day.low, realtime_stock_day.close, realtime_stock_day.last_close) +  model_tup
 

@@ -68,7 +68,7 @@ class StockTimeAnalyzer:
             match_model = self.add_match_model(match_model, self.stock_day_pack_matcher.match(realtime_stock_day))
 
             if match_model is not None  and self.filter_common_indicate(realtime_stock_day, match_model[0]):
-                return BaseStockUtils.compose_hit_data(realtime_stock_day, match_model)
+                return BaseStockUtils.compose_hit_data(realtime_stock_day, match_model, self.data_container.stock_map.get(realtime_stock_day.symbol))
 
 	except Exception, e:
 	    traceback.print_exc()
