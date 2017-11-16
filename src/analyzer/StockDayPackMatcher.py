@@ -1,5 +1,6 @@
 # encoding=utf8  
 import time
+import sys
 import jsonpickle
 import traceback
 from vo.StockInfo import *
@@ -11,6 +12,7 @@ from utils.LogUtils import *
 
 from quant.ModelBoard import *
 from quant.ModelUpper import *
+from quant.ModelWatch import *
 from quant.ModelCover import *
 from quant.ModelBurst import *
 from quant.ModelMinV import *
@@ -45,6 +47,7 @@ class StockDayPackMatcher:
 
 	    self.model_board = ModelBoard(self.todaystamp)
 	    self.model_upper = ModelUpper(self.latest_days, self.todaystamp)
+            self.model_watch = ModelWatch(self.latest_days, self.todaystamp)
 	    self.model_ma_scatter = ModelMAScatter(self.latest_days, self.todaystamp)
 #	    self.model_min_v = ModelMinV(self.latest_days, self.todaystamp)
 	    self.model_burst = ModelBurst(self.latest_days, self.todaystamp)
@@ -72,6 +75,7 @@ class StockDayPackMatcher:
 	try:
 	    match_model = self.add_match_model(match_model, self.model_board.match(realtime_stock_day)) #ModelBoard(Board)
 	    match_model = self.add_match_model(match_model, self.model_upper.match(realtime_stock_day))	#ModelUpper(Upper)
+	    match_model = self.add_match_model(match_model, self.model_watch.match(realtime_stock_day)) #ModelWatch(Watch)
 	    match_model = self.add_match_model(match_model, self.model_ma_scatter.match(realtime_stock_day)) #ModelMAScatter(MAScatter)
             match_model = self.add_match_model(match_model, self.model_cover.match(realtime_stock_day))  #ModelCover(Cover)
 #	    match_model = self.add_match_model(match_model, self.model_min_v.match(realtime_stock_day))  #ModelMinV(MinV)
@@ -96,9 +100,8 @@ class StockDayPackMatcher:
         try:
 
 	    #忽略
-#	    if match_model.find('ReMark-') > -1 or match_model.find('Upper-') > -1 or match_model.find('Cover-') > -1  or match_model.find('MAScatter-') > -1 or match_model.find('Board-') > -1:
-
-#		return True
+	    if match_model.find('ReMark-') > -1 or match_model.find('Upper-') > -1 or match_model.find('Cover-') > -1  or match_model.find('MAScatter-') > -1 or match_model.find('Board-') > -1 or match_model.find('Watch-') > -1:
+		return True
 
             hist_weeks = self.latest_weeks[realtime_stock_day.symbol]
 	    hist_days = self.latest_days[realtime_stock_day.symbol]
